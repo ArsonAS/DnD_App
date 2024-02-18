@@ -13,8 +13,8 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
     @Id
-    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sec", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @SequenceGenerator(name = "user_gen", sequenceName = "user_sec", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
     protected Long id;
     protected String username;
     @Column(unique = true)
