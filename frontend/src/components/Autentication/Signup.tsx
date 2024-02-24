@@ -1,37 +1,40 @@
-import { Component } from "react";
-import { Button } from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 
 interface Props {}
 
-export const Signup = () =>{
+export const Signup = () => {
     return (
-        <Form>
-            <Form.Group controlId="userEmail">
-                <Form.Label>Adresse courriel</Form.Label>
-                <Form.Control type="email" placeholder="Saissir votre courriel"/>
-            </Form.Group>
+        <Container fluid className="p-2 bg-dark">
 
-            <Form.Group controlId="userName">
-                <Form.Label>Nom d'usager</Form.Label>
-                <Form.Control type="text" placeholder="Saissir votre nom d'usager"/>
-            </Form.Group>
+            <Form className="p-2 m-5 bg-dark text-warning border border-warning rounded d-flex flex-column">
 
-            <Form.Group controlId="userPassword">
-                <Form.Label>Mot de passe</Form.Label>
-                <Form.Control type="password" placeholder="Saissir votre nom mot de passe"/>
-            </Form.Group>
+                <Form.Group controlId="userEmail" className="m-3 d-flex justify-content-between align-items-start">
+                    <Form.Label>Adresse courriel</Form.Label>
+                    <Form.Control type="email" placeholder="Saissir votre courriel"/>
+                </Form.Group>
 
-            <Form.Group controlId="passwordconfirmation">
-                <Form.Label>Mot de passe</Form.Label>
-                <Form.Control type="password" placeholder="Confirmer votre nom mot de passe"/>
-            </Form.Group>
+                <Form.Group controlId="userName" className="m-3 d-flex justify-content-between align-items-start">
+                    <Form.Label>Nom d'usager</Form.Label>
+                    <Form.Control type="text" placeholder="Saissir votre nom d'usager"/>
+                </Form.Group>
 
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
+                <Form.Group controlId="userPassword" className="m-3 d-flex justify-content-between align-items-start">
+                    <Form.Label>Mot de passe</Form.Label>
+                    <Form.Control type="password" placeholder="Saissir votre nom mot de passe"/>
+                </Form.Group>
 
-        </Form>
+                <Form.Group controlId="passwordconfirmation" className="m-3 d-flex justify-content-between align-items-start">
+                    <Form.Control type="password" placeholder="Confirmer votre nom mot de passe"/>
+                </Form.Group>
+
+
+                <Button variant="primary" type="submit" className="bg-warning text-dark border-warning">
+                    Submit
+                </Button>
+            </Form>
+        </Container>
+
 
     );
 }
