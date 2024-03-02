@@ -22,6 +22,16 @@ public class Character {
     private String alignment;
     private int experiencePoints;
 
+    @Embedded
+    CharacterDetails characterDetails;
+    @Embedded
+    CharacterAbilityScores characterAbilityScores;
+    @Embedded
+    CharacterSkills characterSkills;
+    @Embedded
+    CharacterInventory characterInventory;
+
+
     @ManyToOne
     @JoinColumn(name = "player_id")
     @ToString.Exclude
