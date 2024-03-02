@@ -15,11 +15,11 @@ public class Campaign {
     @ManyToOne
     @JoinColumn(name = "dm_id")
     @ToString.Exclude
-    DM dm;
+    private DM dm;
 
     @OneToOne
     @JoinColumn(name = "parti_id")
-    Parti parti;
+    private Parti parti;
 
 
 }

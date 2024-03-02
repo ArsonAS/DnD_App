@@ -11,5 +11,5 @@ import java.util.List;
 public class DM extends User{
 
     @OneToMany(mappedBy = "dm")
-    List<Campaign> campaigns;
+    private List<Campaign> campaigns;
 }

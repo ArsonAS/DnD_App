@@ -1,5 +1,6 @@
 package com.dnd_app.model;
 
+import com.dnd_app.model.Character.Character;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -17,5 +18,5 @@ public class Player extends User{
 
     @ToString.Exclude
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
-    List<Character> characters;
+    private List<Character> characters;
 }

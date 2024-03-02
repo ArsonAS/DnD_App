@@ -1,5 +1,6 @@
 package com.dnd_app.model;
 
+import com.dnd_app.model.Character.Character;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,18 +19,18 @@ public class Parti {
 
     @ManyToOne
     @JoinColumn(name = "character_2_id")
-    Character character2;
+    private Character character2;
 
     @ManyToOne
     @JoinColumn(name = "character_3_id")
-    Character character3;
+    private Character character3;
 
     @ManyToOne
     @JoinColumn(name = "character_4_id")
-    Character character4;
+    private Character character4;
 
     @ManyToOne
     @JoinColumn(name = "character_5_id")
-    Character character5;
+    private Character character5;
 
 }
