@@ -8,3 +8,4 @@ Quant aux joueurs, ils pourraient créer des personnages et rejoindre des campag
 De plus, l'application faciliterait la gestion des campagnes.  
 Dungeon Masters pourrait facilement documenter les déroulements de la campagne et accéder aux informations selon leurs besoins, tandis que les joueurs auraient également des 
 capacités similaires.
+Remarque : je prévois d'utiliser l'API D&D 5e pour renseigner certaines données du personnage lorsque le joueur remplit les informations minimales requises et pour proposer certaines options au joueur sur l'écran de création de personnage.
