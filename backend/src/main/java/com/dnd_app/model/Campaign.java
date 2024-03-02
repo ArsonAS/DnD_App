@@ -13,7 +13,13 @@ public class Campaign {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "dungeon_master_id")
+    @JoinColumn(name = "dm_id")
     @ToString.Exclude
-    DM dungeonMaster;
+    DM dm;
+
+    @OneToOne
+    @JoinColumn(name = "parti_id")
+    Parti parti;
+
+
 }

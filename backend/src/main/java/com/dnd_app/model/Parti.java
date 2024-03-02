@@ -12,5 +12,24 @@ public class Parti {
     private Long id;
 
 
+    @ManyToOne
+    @JoinColumn(name = "character_1_id")
+    Character character1;
+
+    @ManyToOne
+    @JoinColumn(name = "character_2_id")
+    Character character2;
+
+    @ManyToOne
+    @JoinColumn(name = "character_3_id")
+    Character character3;
+
+    @ManyToOne
+    @JoinColumn(name = "character_4_id")
+    Character character4;
+
+    @ManyToOne
+    @JoinColumn(name = "character_5_id")
+    Character character5;
 
 }
