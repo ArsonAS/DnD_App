@@ -1,5 +1,5 @@
 import { Col, Form } from "react-bootstrap";
-import "./styles.css";
+
 
 interface Props {
     label: string;
