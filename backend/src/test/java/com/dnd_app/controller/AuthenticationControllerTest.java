@@ -35,7 +35,7 @@ public class AuthenticationControllerTest {
     private UserRepository userRepository;
     @MockBean
     private UserService userService;
-    
+
     @MockBean
     private AuthenticationService authenticationService;
     @MockBean
@@ -47,7 +47,7 @@ public class AuthenticationControllerTest {
         when(userService.createUser(any())).thenReturn(Optional.of(mock(UserDTO.class)));
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/api/auth/signup/user")
+                .post("/api/auth/signup")
                 .with(csrf())
                 .content(createJsonOfUserDTO())
                 .contentType(MediaType.APPLICATION_JSON);
@@ -60,7 +60,7 @@ public class AuthenticationControllerTest {
         when(userService.createUser(any())).thenReturn(Optional.empty());
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/api/auth/signup/user")
+                .post("/api/auth/signup")
                 .with(csrf())
                 .content(createJsonOfUserDTO())
                 .contentType(MediaType.APPLICATION_JSON);

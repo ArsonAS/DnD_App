@@ -7,8 +7,13 @@ import {Signup} from "./components/Autentication/Signup";
 function App() {
   return (
       <Router>
-          <Signup/>
-          <Routes></Routes>
+
+          <Routes>
+              <Route
+                  path="/signup/*"
+                  element={<Signup/>}
+              />
+          </Routes>
       </Router>
   );
 }

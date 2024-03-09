@@ -36,7 +36,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(jwt);
     }
 
-    @PostMapping("/signup/user")
+    @PostMapping("/signup")
     public ResponseEntity<HttpStatus> createUser(@RequestBody UserDTO userDTO) {
 
         return userService.createUser(userDTO)
