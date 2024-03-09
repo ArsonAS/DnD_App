@@ -15,7 +15,7 @@ public class Campaign {
     @ManyToOne
     @JoinColumn(name = "dm_id")
     @ToString.Exclude
-    private DM dm;
+    private User user;
 
     @OneToOne
     @JoinColumn(name = "parti_id")
