@@ -18,11 +18,11 @@ const FormInput = ({label, value, onChange, errors, formError, controlId, type, 
         <>
             <Col sm={12} md={true}>
                 <Form.Group controlId={controlId}>
-                    <Form.Label>{label}</Form.Label>
+                    <Form.Label sm={3}>{label}</Form.Label>
                     <Form.Control type={type ?? "text"} value={value} onChange={onChange} placeholder={placeholder}/>
-                    {errors.includes(formError) ?
-                        (<p className="error fade-in">{formError}</p>) :
-                        (<div className="error" />)}
+                    {errors.includes(formError)
+                        ? (<p className="error fade-in">{formError}</p>)
+                        : (<div className="error" />)}
                 </Form.Group>
             </Col>
         </>
