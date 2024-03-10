@@ -3,8 +3,7 @@ package com.dnd_app.security.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.dnd_app.dto.UserDTO;
-import com.dnd_app.model.ERole;
+import com.dnd_app.dto.ClientDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,14 +32,14 @@ public class JwtManipulator {
         this.signingAlgorithm = Algorithm.HMAC256(secret);
     }
 
-    public TimedJwt generateToken(UserDTO user) {
+    public TimedJwt generateToken(ClientDTO clientDTO) {
         return new TimedJwt(
                 JWT.create()
-                        .withSubject(user.getEmail())
+                        .withSubject(clientDTO.getEmail())
                         .withIssuedAt(new Date())
-                        .withClaim("id", user.getId())
-                        .withClaim("email", user.getEmail())
-                        .withClaim("authorities", determineAuthorities(user))
+                        .withClaim("id", clientDTO.getId())
+                        .withClaim("email", clientDTO.getEmail())
+                        .withClaim("authorities", determineAuthorities(clientDTO))
                         .withExpiresAt(new Date(new Date().getTime() + expirationMs))
                         .withIssuer(issuer)
                         .sign(signingAlgorithm),
@@ -48,13 +47,9 @@ public class JwtManipulator {
         );
     }
 
-    public List<String> determineAuthorities(UserDTO user) {
+    public List<String> determineAuthorities(ClientDTO user) {
         List<String> authorities = new ArrayList<>();
-
-
-
-        authorities.add(ERole.ROLE_USER.name());
-
+        authorities.add("Client");
         return authorities;
     }
 

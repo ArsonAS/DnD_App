@@ -1,9 +1,9 @@
 package com.dnd_app.security.jwt;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.dnd_app.dto.UserDTO;
-import com.dnd_app.model.User;
-import com.dnd_app.repository.UserRepository;
+import com.dnd_app.dto.ClientDTO;
+import com.dnd_app.model.Client;
+import com.dnd_app.repository.ClientRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import java.util.*;
 @AllArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtManipulator jwtManipulator;
-    private final UserRepository userRepository;
+    private final ClientRepository clientRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -34,19 +34,19 @@ public class JwtFilter extends OncePerRequestFilter {
         if (jwt.isPresent()) {
             String token = jwt.get();
             DecodedJWT decodedJWT = jwtManipulator.decodeToken(token);
-            Optional<User> optionalUser = userRepository.findByUsername(decodedJWT.getSubject());
+            Optional<Client> optionalUser = clientRepository.findByUsername(decodedJWT.getSubject());
 
-            UserDTO userDTO;
+            ClientDTO clientDTO;
 
             if (optionalUser.isPresent()) {
 
-                userDTO = new UserDTO(optionalUser.get());
+                clientDTO = new ClientDTO(optionalUser.get());
             } else {
                 handleInvalidToken(request, response, filterChain);
                 return;
             }
 
-            List<String> authorities = jwtManipulator.determineAuthorities(userDTO);
+            List<String> authorities = jwtManipulator.determineAuthorities(clientDTO);
 
             if (!isTokenValid(decodedJWT, authorities)) {
                 handleInvalidToken(request, response, filterChain);
@@ -56,8 +56,8 @@ public class JwtFilter extends OncePerRequestFilter {
             List<GrantedAuthority> grantedAuthorities = convertAuthorities(authorities);
 
             UserDetails userDetails = org.springframework.security.core.userdetails.User
-                    .withUsername(userDTO.getEmail())
-                    .password(userDTO.getPassword())
+                    .withUsername(clientDTO.getEmail())
+                    .password(clientDTO.getPassword())
                     .authorities(grantedAuthorities)
                     .build();
 
