@@ -1,12 +1,12 @@
 package com.dnd_app.controller;
 
-import com.dnd_app.dto.UserDTO;
+import com.dnd_app.dto.ClientDTO;
 import com.dnd_app.repository.SaltRepository;
-import com.dnd_app.repository.UserRepository;
+import com.dnd_app.repository.ClientRepository;
 import com.dnd_app.security.jwt.JwtManipulator;
 import com.dnd_app.security.jwt.TimedJwt;
 import com.dnd_app.security.service.AuthenticationService;
-import com.dnd_app.service.UserService;
+import com.dnd_app.service.ClientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,9 +32,9 @@ public class AuthenticationControllerTest {
     @MockBean
     private SaltRepository saltRepository;
     @MockBean
-    private UserRepository userRepository;
+    private ClientRepository clientRepository;
     @MockBean
-    private UserService userService;
+    private ClientService clientService;
 
     @MockBean
     private AuthenticationService authenticationService;
@@ -44,7 +44,7 @@ public class AuthenticationControllerTest {
     @Test
     @WithMockUser
     public void testUserSignup_happyPath() throws Exception {
-        when(userService.createUser(any())).thenReturn(Optional.of(mock(UserDTO.class)));
+        when(clientService.createClient(any())).thenReturn(Optional.of(mock(ClientDTO.class)));
 
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/api/auth/signup")
@@ -56,13 +56,13 @@ public class AuthenticationControllerTest {
     }
     @Test
     @WithMockUser
-    public void testUserSignup_invalidEmployer() throws Exception {
-        when(userService.createUser(any())).thenReturn(Optional.empty());
+    public void testClientSignup_invalidClient() throws Exception {
+        when(clientService.createClient(any())).thenReturn(Optional.empty());
 
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/api/auth/signup")
                 .with(csrf())
-                .content(createJsonOfUserDTO())
+                .content(createJsonOfClientDTO())
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request).andExpect(status().isBadRequest());
@@ -71,10 +71,10 @@ public class AuthenticationControllerTest {
     @Test
     @WithMockUser
     public void testLogin_happyPath() throws Exception {
-        UserDTO mockedUserDTO = mock(UserDTO.class);
+        ClientDTO mockedClientDTO = mock(ClientDTO.class);
 
-        when(authenticationService.login(any())).thenReturn(Optional.of(mockedUserDTO));
-        when(jwtManipulator.generateToken(mockedUserDTO)).thenReturn(mock(TimedJwt.class));
+        when(authenticationService.login(any())).thenReturn(Optional.of(mockedClientDTO));
+        when(jwtManipulator.generateToken(mockedClientDTO)).thenReturn(mock(TimedJwt.class));
 
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/api/auth/login").with(csrf())
@@ -86,7 +86,7 @@ public class AuthenticationControllerTest {
     }
     @Test
     @WithMockUser
-    public void testLogin_UserNotFound_soUnauthorized() throws Exception {
+    public void testLogin_ClientNotFound_soUnauthorized() throws Exception {
         when(authenticationService.login(any())).thenReturn(Optional.empty());
 
         RequestBuilder request = MockMvcRequestBuilders
@@ -100,7 +100,7 @@ public class AuthenticationControllerTest {
 
 
 
-    private String createJsonOfUserDTO() {
+    private String createJsonOfClientDTO() {
         return "{" +
                 "\"username\":\"\"," +
                 "\"email\":\"\"," +
