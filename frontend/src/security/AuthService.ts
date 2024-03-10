@@ -53,8 +53,7 @@ export const getUserId = (): string | null => {
 
 export const hasSessionExpiredRecently = (): boolean => {
     return (
-        Date.now() - parseInt(localStorage.getItem(SESSION_EXPIRED_AT) || "0") <
-        TIME_BEFORE_EXPIRE_ISNT_RECENT
+        Date.now() - parseInt(localStorage.getItem(SESSION_EXPIRED_AT) || "0") < TIME_BEFORE_EXPIRE_ISNT_RECENT
     );
 };
 

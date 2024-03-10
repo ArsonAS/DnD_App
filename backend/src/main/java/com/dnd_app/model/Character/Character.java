@@ -1,6 +1,6 @@
 package com.dnd_app.model.Character;
 
-import com.dnd_app.model.User;
+import com.dnd_app.model.Client;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -33,9 +33,9 @@ public class Character {
 
 
     @ManyToOne
-    @JoinColumn(name = "player_id")
+    @JoinColumn(name = "client_id")
     @ToString.Exclude
-    private User user;
+    private Client client;
 
 
 

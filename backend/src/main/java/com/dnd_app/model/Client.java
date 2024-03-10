@@ -8,9 +8,9 @@ import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorColumn(name = "current_role")
-public class User {
+public class Client {
     @Id
     @SequenceGenerator(name = "user_gen", sequenceName = "user_sec", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
@@ -21,23 +21,22 @@ public class User {
     protected String email;
     @ToString.Exclude
     protected String password;
-
-    protected ERole currentRole;
+    protected String role;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Character> characters;
 
-    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Campaign> campaigns;
 
-    @Builder(builderMethodName = "userBuilder")
-    public User(Long id, String username, String email, String password, ERole currentRole) {
-        this.id = id;
+    @Builder(builderMethodName = "clientBuilder")
+    public Client(String username, String email, String password, String role) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.currentRole = currentRole;
+        this.role = role;
     }
 
 

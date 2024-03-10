@@ -13,9 +13,9 @@ public class Campaign {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "dm_id")
+    @JoinColumn(name = "client_id")
     @ToString.Exclude
-    private User user;
+    private Client client;
 
     @OneToOne
     @JoinColumn(name = "parti_id")
