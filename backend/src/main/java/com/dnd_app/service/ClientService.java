@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class ClientService {
     private final ClientRepository clientRepository;
     private final SaltRepository saltRepository;
 
-    public UserService(ClientRepository clientRepository, SaltRepository saltRepository) {
+    public ClientService(ClientRepository clientRepository, SaltRepository saltRepository) {
         this.clientRepository = clientRepository;
         this.saltRepository = saltRepository;
     }
@@ -31,7 +31,7 @@ public class UserService {
     }
 
     @Transactional
-    public Optional<ClientDTO> createUser(ClientDTO clientDTO){
+    public Optional<ClientDTO> createClient(ClientDTO clientDTO){
         if (clientDTO == null) throw new IllegalArgumentException("User cannot be null");
 
         Optional<Client> userOptional = clientRepository.findByUsername(clientDTO.getUsername());
