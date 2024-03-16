@@ -31,6 +31,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/clients/**").permitAll()
                 );
 
         http.sessionManagement((sessionManagement) ->
