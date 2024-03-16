@@ -1,6 +1,7 @@
 package com.dnd_app.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,6 +13,8 @@ public class Campaign {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "camp_gen")
     private Long id;
 
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     @ToString.Exclude
@@ -19,7 +22,13 @@ public class Campaign {
 
     @OneToOne
     @JoinColumn(name = "parti_id")
-    private Parti parti;
+    @ToString.Exclude
+    private Party party;
 
-
+    @Builder(builderMethodName = "campaignBuilder")
+    public Campaign(String name, Client client, Party party) {
+        this.name = name;
+        this.client = client;
+        this.party = party;
+    }
 }
