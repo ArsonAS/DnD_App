@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Button, Col, Container, Form, FormControl, FormSelect, Row} from "react-bootstrap";
-import {User} from "../../models/User";
+import {Client} from "../../models/Client";
 import {validateEmail, validatePassword, validatePasswordConfirmation} from "../../services/validationService";
 import FormInput from "../FormInput";
-import {signup} from "../../services/signupService";
+
+import {authenticate, getClientId, login, logout, signup} from "../../security/authService";
+import {LoginRequest} from "../../security/authentication";
 
 
 export const Signup = () => {
@@ -18,8 +20,7 @@ export const Signup = () => {
 
     const submitForm = () => {
         if (!validateForm()) return;
-
-        let user: User = {
+        let user: Client = {
             username,
             email,
             password,
@@ -28,11 +29,20 @@ export const Signup = () => {
         handleSubmit(user);
     };
 
-    const handleSubmit = (user: User) => {
-        signup(user).then((_)=>{
-            navigate("/login/createdUser");
+    const handleSubmit = (user: Client) => {
+        signup(user).then(()=>{
+            let loginRequest: LoginRequest = {
+                username: username,
+                password: password,
+            };
+            login(loginRequest).then(response => {
+                authenticate(response.data);
+                const id = getClientId();
+
+                navigate("/clientpage" + id);
+            })
         });
-    };
+    }
 
 
     const validateForm = (): boolean => {
@@ -76,7 +86,6 @@ export const Signup = () => {
                                errors={errors} formError="Le Nom d'usager ne peut pas être vide"
                                controlId="userName"
                     />
-
                 </Row>
 
                 <Row>
@@ -111,9 +120,8 @@ export const Signup = () => {
                 </Row>
 
                 <Button variant="outline-warning" className="mt-3" onClick={submitForm} >S'inscrire</Button>
+                <Link color="outline-warning" to={"/"}>Avez-vous un compte? Se connecter</Link>
             </div>
         </Container>
-
-
     );
 }
