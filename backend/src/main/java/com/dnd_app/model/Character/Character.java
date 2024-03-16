@@ -2,6 +2,7 @@ package com.dnd_app.model.Character;
 
 import com.dnd_app.model.Client;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
@@ -15,7 +16,6 @@ public class Character {
 
     private String name;
     private String characterClass;
-    private String subclass;
     private int level;
     private String background;
     private String race;
@@ -23,14 +23,9 @@ public class Character {
     private int experiencePoints;
 
     @Embedded
-    CharacterDetails characterDetails;
-    @Embedded
     CharacterAbilityScores characterAbilityScores;
     @Embedded
     CharacterSkills characterSkills;
-    @Embedded
-    CharacterInventory characterInventory;
-
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -38,7 +33,21 @@ public class Character {
     private Client client;
 
 
-
+    @Builder(builderMethodName = "characterBuilder")
+    public Character(Long id, String name, String characterClass, int level, String background, String race, String alignment, int experiencePoints,
+                     CharacterAbilityScores characterAbilityScores, CharacterSkills characterSkills, Client client) {
+        this.id = id;
+        this.name = name;
+        this.characterClass = characterClass;
+        this.level = level;
+        this.background = background;
+        this.race = race;
+        this.alignment = alignment;
+        this.experiencePoints = experiencePoints;
+        this.characterAbilityScores = characterAbilityScores;
+        this.characterSkills = characterSkills;
+        this.client = client;
+    }
 
 
 }
