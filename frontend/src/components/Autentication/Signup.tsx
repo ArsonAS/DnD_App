@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {Button, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, FormSelect, Row} from "react-bootstrap";
 import {User} from "../../models/User";
 import {validateEmail, validatePassword, validatePasswordConfirmation} from "../../services/validationService";
 import FormInput from "../FormInput";
@@ -76,7 +76,21 @@ export const Signup = () => {
                                errors={errors} formError="Le Nom d'usager ne peut pas être vide"
                                controlId="userName"
                     />
+
                 </Row>
+
+                <Row>
+                    <Col sm={12} md={true}>
+                        <Form.Group controlId="userRole">
+                            <Form.Label sm={3}>Role</Form.Label>
+                            <FormControl as="select" onChange={(e) => setCurrentRole(e.target.value)}>
+                                <option value={"PLAYER"}>Joueur</option>
+                                <option value={"DM"}>Maître du donjon</option>
+                            </FormControl>
+                        </Form.Group>
+                    </Col>
+                </Row>
+
                 <Row>
                     <FormInput label="Adresse courriel" value={email} onChange={(e)=> setEmail(e.target.value)}
                                errors={errors} formError="Veuillez entrer une adresse courriel valide"
