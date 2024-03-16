@@ -20,13 +20,13 @@ export const Signup = () => {
 
     const submitForm = () => {
         if (!validateForm()) return;
-        let user: Client = {
+        let client: Client = {
             username,
             email,
             password,
             currentRole
         };
-        handleSubmit(user);
+        handleSubmit(client);
     };
 
     const handleSubmit = (user: Client) => {
