@@ -40,7 +40,7 @@ public class AuthenticationController {
     public ResponseEntity<HttpStatus> createClient(@RequestBody ClientDTO clientDTO) {
 
         return clientService.createClient(clientDTO)
-                .map(user -> new ResponseEntity<HttpStatus>(HttpStatus.CREATED))
+                .map(client -> new ResponseEntity<HttpStatus>(HttpStatus.CREATED))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 

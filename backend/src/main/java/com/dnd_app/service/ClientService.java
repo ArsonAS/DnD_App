@@ -42,4 +42,8 @@ public class ClientService {
         return Optional.of(new ClientDTO(clientRepository.save(newClient)));
     }
 
+    public Optional<ClientDTO> findClientById(Long clientId){
+        return Optional.of(new ClientDTO(clientRepository.findById(clientId).get()));
+    }
+
 }

@@ -49,7 +49,7 @@ public class AuthenticationControllerTest {
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/api/auth/signup")
                 .with(csrf())
-                .content(createJsonOfUserDTO())
+                .content(createJsonOfClientDTO())
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request).andExpect(status().isCreated());
