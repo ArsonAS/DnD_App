@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -32,10 +33,10 @@ public class ClientService {
 
     @Transactional
     public Optional<ClientDTO> createClient(ClientDTO clientDTO){
-        if (clientDTO == null) throw new IllegalArgumentException("User cannot be null");
+        if (clientDTO == null) throw new IllegalArgumentException("Client cannot be null");
 
         Optional<Client> userOptional = clientRepository.findByUsername(clientDTO.getUsername());
-        if (userOptional.isPresent()) throw new IllegalArgumentException("User already exists");
+        if (userOptional.isPresent()) throw new IllegalArgumentException("Client already exists");
 
         Client newClient = clientDTO.fromDTO();
         hashAndSaltPassword(newClient);
@@ -43,7 +44,7 @@ public class ClientService {
     }
 
     public Optional<ClientDTO> findClientById(Long clientId){
-        return Optional.of(new ClientDTO(clientRepository.findById(clientId).get()));
+        return Optional.of(new ClientDTO(clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"))));
     }
 
 }

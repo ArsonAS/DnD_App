@@ -12,7 +12,7 @@ import {LoginRequest} from "../../security/authentication";
 export const Signup = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
-    const [currentRole, setCurrentRole] = useState<string>("")
+    const [role, setRole] = useState<string>("")
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
@@ -24,7 +24,7 @@ export const Signup = () => {
             username,
             email,
             password,
-            currentRole
+            role: role
         };
         handleSubmit(client);
     };
@@ -39,7 +39,7 @@ export const Signup = () => {
                 authenticate(response.data);
                 const id = getClientId();
 
-                navigate("/clientpage" + id);
+                navigate("/clientpage/" + id);
             })
         });
     }
@@ -92,7 +92,7 @@ export const Signup = () => {
                     <Col sm={12} md={true}>
                         <Form.Group controlId="userRole">
                             <Form.Label sm={3}>Role</Form.Label>
-                            <FormControl as="select" onChange={(e) => setCurrentRole(e.target.value)}>
+                            <FormControl as="select" onChange={(e) => setRole(e.target.value)}>
                                 <option value={"PLAYER"}>Joueur</option>
                                 <option value={"DM"}>Maître du donjon</option>
                             </FormControl>

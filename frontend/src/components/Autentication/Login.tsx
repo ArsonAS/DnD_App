@@ -39,7 +39,7 @@ export const Login = () =>{
                 }
 
                 getClientById(parseInt(id))
-                    .then((res) => {
+                    .then((response) => {
                         navigate("/clientpage" + id);
                     })
                     .catch((err) => {

@@ -3,6 +3,6 @@ export interface Client {
     username?: string;
     email: string;
     password: string;
-    currentRole?: string;
+    role?: string;
 }
 
