@@ -4,7 +4,7 @@ import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, ButtonGroup, Col, Container, Form, FormControl, Row} from "react-bootstrap";
 import FormInput from "./FormInput";
 import {getClientById} from "../services/clientService";
-import {getClientId} from "../security/authService";
+import {getClientId, logout} from "../security/authService";
 
 export const Dashboard = () => {
     const [client, setClient] = useState<Client>();
@@ -21,6 +21,10 @@ export const Dashboard = () => {
             setClient(response.data);
         })
     });
+    const disconnect = () => {
+        logout();
+        navigate("/");
+    };
 
 
     return (
@@ -38,6 +42,7 @@ export const Dashboard = () => {
                             <Button>Créer un personnage</Button>
                         </ButtonGroup>
                 }
+                <Button variant="outline-warning" onClick={disconnect} className="me-2">Se déconnecter</Button>
             </div>
         </Container>
     );
