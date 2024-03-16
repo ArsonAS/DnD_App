@@ -1,5 +1,5 @@
 export interface LoginRequest {
-    identification: string;
+    username: string;
     password: string;
 }
 export interface TimedJwt {

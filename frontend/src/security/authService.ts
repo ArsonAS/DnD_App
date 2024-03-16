@@ -4,11 +4,15 @@ import {AxiosResponse} from "axios";
 import {DecodedJwt, LoginRequest, TimedJwt} from "./authentication";
 import {AUTH_PREFIX} from "../constants/apiPrefixes";
 import {jwtDecode} from "jwt-decode";
-
+import {Client} from "../models/Client";
 
 export const login = async (loginRequest: LoginRequest): Promise<AxiosResponse<TimedJwt>> => {
     return http.post(`${AUTH_PREFIX}/login`, loginRequest);
 };
+export const signup = async (user: Client): Promise<AxiosResponse> => {
+    return http.post(`${AUTH_PREFIX}/signup`, user);
+};
+
 
 export const authenticate = (timedJwt: TimedJwt) => {
     localStorage.setItem(JWT, timedJwt.jwt);
@@ -44,7 +48,7 @@ const clearConnection = () => {
 };
 
 
-export const getUserId = (): string | null => {
+export const getClientId = (): string | null => {
     const jwt = localStorage.getItem(JWT);
     if (!jwt) return null;
 
