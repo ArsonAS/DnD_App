@@ -6,8 +6,3 @@ export interface User {
     currentRole?: string;
 }
 
-export enum Role {
-    Player,
-    DM,
-    Admin,
-}
