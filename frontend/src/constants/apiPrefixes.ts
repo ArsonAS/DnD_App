@@ -1,2 +1,2 @@
-export const USER_PREFIX = "/api/users";
+export const CLIENT_PREFIX = "/api/clients";
 export const AUTH_PREFIX = "/api/auth";

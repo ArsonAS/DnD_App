@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import {expireSession, getJwt, isConnected} from "../security/AuthService";
+import {expireSession, getJwt, isConnected} from "../security/authService";
 
 export const http = axios.create({
     baseURL: "http://localhost:8080",
