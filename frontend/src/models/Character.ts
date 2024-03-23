@@ -35,5 +35,5 @@ export interface Character{
         stealth: number;
         survival: number;
     };
-    clientId: string;
+    clientId: number;
 }

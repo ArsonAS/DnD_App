@@ -10,11 +10,11 @@ export const AddCharacter = () => {
     const navigate = useNavigate();
 
     const [name, setName] = useState<string>("");
-    const [classe, setClasse] = useState<string>("");
+    const [classe, setClasse] = useState<string>("Barbare");
     const [level, setLevel] = useState<number>(0);
-    const [background, setBackground] = useState<string>("");
-    const [race, setRace] = useState<string>("");
-    const [alignment, setAlignment] = useState<string>("");
+    const [background, setBackground] = useState<string>("Acolyte");
+    const [race, setRace] = useState<string>("Humaine");
+    const [alignment, setAlignment] = useState<string>("Bien légitime");
     const [experiencePoints, setExperiencePoints] = useState<number>(0);
 
     const [strength, setStrength] = useState<number>(10);
@@ -23,17 +23,14 @@ export const AddCharacter = () => {
     const [intelligence, setIntelligence] = useState<number>(10);
     const [wisdom, setWisdom] = useState<number>(10);
     const [charisma, setCharisma] = useState<number>(10);
-    const [clientId, setClientId] = useState<string>("");
+    const [clientId, setClientId] = useState<number>(1);
 
     const [errors, setErrors] = useState<string[]>([]);
 
     const submitForm = () => {
         if (!validateForm()) return;
         const id = getClientId();
-        if (id !== null){
-            setClientId(id!);
-        }
-
+        if (id !== null) setClientId(parseInt(id));
 
         let character: Character = {
             name,
@@ -53,11 +50,11 @@ export const AddCharacter = () => {
             },
             clientId,
         };
-        handleSubmit(character);
+        handleSubmit(character, clientId);
     };
 
-    const handleSubmit = (character: Character) => {
-        createCharacter(character).then(() => {
+    const handleSubmit = (character: Character, clientId: number) => {
+        createCharacter(character, clientId).then(() => {
             navigate("/clientpage/" + getClientId());
         })
     }
@@ -223,11 +220,7 @@ export const AddCharacter = () => {
                     </Col>
                 </Row>
                 <Button variant="outline-warning" className="mt-3" onClick={submitForm} >Soumettre</Button>
-
             </div>
-
-
-
         </Container>
     );
 }
