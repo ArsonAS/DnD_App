@@ -6,7 +6,7 @@ export interface Character{
     background: string;
     race:string;
     alignment: string;
-    experiencePoints: string;
+    experiencePoints: number;
     characterAbilityScores: {
         strength: number;
         dexterity: number;
@@ -15,7 +15,7 @@ export interface Character{
         wisdom: number;
         charisma: number;
     };
-    characterSkills: {
+    characterSkills?: {
         acrobatics: number;
         animalHandling: number;
         arcana: number;
@@ -35,5 +35,5 @@ export interface Character{
         stealth: number;
         survival: number;
     };
-    clientId:number;
+    clientId: string;
 }

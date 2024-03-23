@@ -7,6 +7,7 @@ import {Signup} from "./components/Autentication/Signup";
 import {Login} from "./components/Autentication/Login";
 import {Dashboard} from "./components/Dashboard";
 import {CharacterPage} from "./components/CharacterPage";
+import {AddCharacter} from "./components/AddCharacter";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               <Route path="/signup" element={<Signup/>}/>
               <Route path="/clientpage/:id" element={<Dashboard/>}/>
               <Route path="/characterpage/:id" element={<CharacterPage/>}/>
+              <Route path="/character/new" element={<AddCharacter/>}/>
           </Routes>
       </Router>
   );

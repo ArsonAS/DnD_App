@@ -2,7 +2,6 @@ import {Badge, Button, ButtonGroup, Col, Container, Form, FormControl, Row, Stac
 import {useEffect, useState} from "react";
 import {Character} from "../models/Character";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {getClientId, logout} from "../security/authService";
 import {getCharacterById, getClientById} from "../services/clientService";
 import {NavBar} from "./NavBar";
 

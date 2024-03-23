@@ -28,7 +28,7 @@ export const Dashboard = () => {
     };
 
     const goToCreateCharacter = () => {
-        navigate("/api/clients/newCharacter");
+        navigate("/character/new");
     }
 
     return (
