@@ -1,5 +1,6 @@
 package com.dnd_app.controller;
 
+import com.dnd_app.dto.CharacterDTO;
 import com.dnd_app.dto.ClientDTO;
 import com.dnd_app.service.ClientService;
 import lombok.AllArgsConstructor;
@@ -15,9 +16,16 @@ public class ClientController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClientDTO> getEmployerById(@PathVariable Long id){
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id){
         return clientService.findClientById(id)
                 .map(client -> ResponseEntity.ok(client))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/characters")
+    public ResponseEntity<CharacterDTO> getCharacterById(@RequestParam("charId") Long charId){
+        return clientService.findCharacterById(charId)
+                .map(character -> ResponseEntity.ok(character))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

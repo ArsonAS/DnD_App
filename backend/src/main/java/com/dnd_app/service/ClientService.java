@@ -2,6 +2,7 @@ package com.dnd_app.service;
 
 import com.dnd_app.dto.CharacterDTO;
 import com.dnd_app.dto.ClientDTO;
+import com.dnd_app.model.Character.Character;
 import com.dnd_app.model.Salt;
 import com.dnd_app.model.Client;
 import com.dnd_app.repository.CharacterRepository;
@@ -54,7 +55,12 @@ public class ClientService {
 
     public Optional<CharacterDTO> createCharacter (CharacterDTO characterDTO){
         if(characterDTO == null) throw new IllegalArgumentException("Character cannot be null");
-        return Optional.of(new CharacterDTO(characterRepository.save(characterDTO.fromDTO())));
+
+        Client client = clientRepository.findById(characterDTO.getClientId()).orElseThrow(() -> new NoSuchElementException("Client not found"));
+        Character newCharacter = characterDTO.fromDTO();
+        newCharacter.setClient(client);
+
+        return Optional.of(new CharacterDTO(characterRepository.save(newCharacter)));
     }
 
     public Optional<CharacterDTO> findCharacterById(Long characterId){

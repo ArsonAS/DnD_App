@@ -1,6 +1,8 @@
 package com.dnd_app;
 
+import com.dnd_app.dto.CharacterDTO;
 import com.dnd_app.dto.ClientDTO;
+import com.dnd_app.model.Character.CharacterAbilityScores;
 import com.dnd_app.repository.ClientRepository;
 import com.dnd_app.service.ClientService;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,19 @@ public class DnDApplication implements CommandLineRunner {
                         .email("lilian@dnd.com")
                         .password("Password1")
                         .role("PLAYER")
+                .build());
+
+        clientService.createCharacter(CharacterDTO.characterDTOBuilder()
+                        .clientId(1L)
+                        .name("Xefoul Snaromers")
+                        .classe("Wizard")
+                        .level(3)
+                        .background("Mercenary Veteran")
+                        .race("Dark Elf")
+                        .alignment("Neutral")
+                        .experiencePoints(1800)
+                        .characterAbilityScores(new CharacterAbilityScores(10, 10, 10, 10, 10, 10))
+
                 .build());
     }
 }

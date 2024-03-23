@@ -15,7 +15,7 @@ public class CharacterDTO {
     private Long id;
 
     private String name;
-    private String characterClass;
+    private String classe;
     private int level;
     private String background;
     private String race;
@@ -25,11 +25,13 @@ public class CharacterDTO {
     private CharacterAbilityScores characterAbilityScores;
     private CharacterSkills characterSkills;
 
+    private Long clientId;
+
 
     public CharacterDTO(Character character) {
         this.id = character.getId();
         this.name = character.getName();
-        this.characterClass = character.getCharacterClass();
+        this.classe = character.getClasse();
         this.level = character.getLevel();
         this.background = character.getBackground();
         this.race = character.getRace();
@@ -37,14 +39,15 @@ public class CharacterDTO {
         this.experiencePoints = character.getExperiencePoints();
         this.characterAbilityScores = character.getCharacterAbilityScores();
         this.characterSkills = character.getCharacterSkills();
+        this.clientId = character.getClient().getId();
     }
 
     @Builder(builderMethodName = "characterDTOBuilder")
-    public CharacterDTO(Long id, String name, String characterClass, int level, String background, String race, String alignment, int experiencePoints,
-                        CharacterAbilityScores characterAbilityScores, CharacterSkills characterSkills) {
+    public CharacterDTO(Long id, String name, String classe, int level, String background, String race, String alignment, int experiencePoints,
+                        CharacterAbilityScores characterAbilityScores, CharacterSkills characterSkills, Long clientId) {
         this.id = id;
         this.name = name;
-        this.characterClass = characterClass;
+        this.classe = classe;
         this.level = level;
         this.background = background;
         this.race = race;
@@ -52,12 +55,13 @@ public class CharacterDTO {
         this.experiencePoints = experiencePoints;
         this.characterAbilityScores = characterAbilityScores;
         this.characterSkills = characterSkills;
+        this.clientId = clientId;
     }
 
     public Character fromDTO(){
         return Character.characterBuilder()
                 .name(name)
-                .characterClass(characterClass)
+                .classe(classe)
                 .level(level)
                 .background(background)
                 .race(race)

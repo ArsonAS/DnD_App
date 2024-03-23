@@ -28,4 +28,6 @@ public class CharacterSkills {
     private int sleightofHand;
     private int stealth;
     private int survival;
+
+
 }
