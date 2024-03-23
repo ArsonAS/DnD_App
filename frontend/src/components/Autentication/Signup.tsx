@@ -80,7 +80,7 @@ export const Signup = () => {
 
     return (
         <Container fluid className="p-2 bg-dark vh-100">
-            <div className="p-2 m-5 bg-dark text-warning border border-warning rounded vh-50 vw-50">
+            <div className="p-2 m-5 bg-dark text-warning border border-warning rounded vh-50 vw-50 align-content-center">
                 <Row>
                     <FormInput label="Nom d'usager" value={username} onChange={(e)=> setUsername(e.target.value)}
                                errors={errors} formError="Le Nom d'usager ne peut pas être vide"
@@ -108,7 +108,7 @@ export const Signup = () => {
                 </Row>
                 <Row>
                     <FormInput label="Choisissez un mot de passe" value={password} onChange={(e)=> setPassword(e.target.value)}
-                               errors={errors} formError="Veuillez entrer un mot de passe valide"
+                               errors={errors} formError="Doit avoir minimum 8 caracteres, une lettre majuscule, une lettre minuscule et une chiffre"
                                controlId="userPassword" type="password"
                     />
                 </Row>

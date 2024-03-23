@@ -40,7 +40,7 @@ export const Login = () =>{
 
                 getClientById(parseInt(id))
                     .then((response) => {
-                        navigate("/clientpage" + id);
+                        navigate("/clientpage/" + id);
                     })
                     .catch((err) => {
                         logout();
@@ -82,7 +82,7 @@ export const Login = () =>{
 
     return (
         <Container fluid className="p-2 bg-dark vh-100">
-            <div className="p-2 m-5 bg-dark text-warning border border-warning rounded vh-50 vw-50">
+            <div className="p-2 m-5 bg-dark text-warning border border-warning rounded vh-50 vw-50 align-content-center">
                 <Row>
                     <FormInput label="Nom d'usager" value={username} onChange={(e)=> setUsername(e.target.value)}
                                errors={errors} formError="Veuillez entrer votre nom d'usager"
