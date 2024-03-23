@@ -4,6 +4,7 @@ export interface Character{
     classe : string;
     level: number;
     background: string;
+    race:string;
     alignment: string;
     experiencePoints: string;
     characterAbilityScores: {
@@ -33,6 +34,6 @@ export interface Character{
         sleightofHand: number;
         stealth: number;
         survival: number;
-    }
-
+    };
+    clientId:number;
 }
