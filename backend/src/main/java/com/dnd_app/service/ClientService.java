@@ -53,10 +53,10 @@ public class ClientService {
         return Optional.of(new ClientDTO(clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"))));
     }
 
-    public Optional<CharacterDTO> createCharacter (CharacterDTO characterDTO){
+    public Optional<CharacterDTO> createCharacter (CharacterDTO characterDTO, Long clientId){
         if(characterDTO == null) throw new IllegalArgumentException("Character cannot be null");
 
-        Client client = clientRepository.findById(characterDTO.getClientId()).orElseThrow(() -> new NoSuchElementException("Client not found"));
+        Client client = clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"));
         Character newCharacter = characterDTO.fromDTO();
         newCharacter.setClient(client);
 
