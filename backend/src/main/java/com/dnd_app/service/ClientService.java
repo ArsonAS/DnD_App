@@ -53,6 +53,16 @@ public class ClientService {
     public Optional<ClientDTO> findClientById(Long clientId){
         return Optional.of(new ClientDTO(clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"))));
     }
+    public Optional<ClientDTO> updateRoleById(Long clientId){
+        Client client = clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"));
+
+        if (client.getRole().equals("PLAYER")){
+            client.setRole("DM");
+        }
+        else client.setRole("PLAYER");
+
+        return Optional.of(new ClientDTO(clientRepository.save(client)));
+    }
 
     public Optional<CharacterDTO> createCharacter (CharacterDTO characterDTO, Long clientId){
         if(characterDTO == null) throw new IllegalArgumentException("Character cannot be null");
@@ -73,6 +83,9 @@ public class ClientService {
 
         return characterRepository.findAllByClient(client).stream().map(CharacterDTO::new).toList();
     }
+
+
+
 
 
 

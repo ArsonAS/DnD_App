@@ -25,6 +25,13 @@ public class ClientController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientDTO> updateClientById(@RequestParam("clientId") Long clientId){
+        return clientService.updateRoleById(clientId)
+                .map(client -> ResponseEntity.ok(client))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/characters")
     public ResponseEntity<List<CharacterDTO>> getAllCharactersByClientId(@RequestParam("clientId") Long clientId){
         return ResponseEntity.ok(clientService.findAllCharactersByClientId(clientId));
