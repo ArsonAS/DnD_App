@@ -36,7 +36,7 @@ const isResponseInvalid = (response: AxiosResponse<any>) => {
 
 const handleInvalidResponse = () => {
     expireSession();
-    window.location.replace("/login/disconnected");
+    window.location.replace("/");
 };
 
 export default http;

@@ -11,16 +11,24 @@ export const getClientById = async (id: number): Promise<AxiosResponse<Client>> 
 
 
 export const createCharacter = async (character: Character, clientId: number) => {
-    return http.post("/api/clients/characters", character, {
+    return http.post(CHARACTER_PREFIX, character, {
         params:{
             clientId
         }
     });
 }
 export const getCharacterById = async (charId: number): Promise<AxiosResponse<Character>> => {
-    return http.get<Character>(CHARACTER_PREFIX, {
+    return http.get<Character>("/api/clients/character", {
         params:{
-            charId,
+            charId
+        }
+    });
+};
+
+export const getAllCharactersByClientId = async (clientId: number): Promise<AxiosResponse<Character[]>> => {
+    return http.get("/api/clients/characters", {
+        params:{
+            clientId
         }
     });
 };
