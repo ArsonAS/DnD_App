@@ -13,13 +13,14 @@ export const CharacterPage = () => {
 
     useEffect(() => {
         if (character !== undefined) return;
+        const id = parseInt(params.id!);
 
-        const id = params.toString();
 
-        getCharacterById(1).then((response) => {
+        getCharacterById(id).then((response) => {
             setCharacter(response.data);
         })
-    });
+
+    },[setCharacter]);
 
 
     return (
