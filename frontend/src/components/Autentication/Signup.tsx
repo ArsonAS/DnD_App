@@ -12,7 +12,7 @@ import {LoginRequest} from "../../security/authentication";
 export const Signup = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState<string>("");
-    const [role, setRole] = useState<string>("")
+    const [role, setRole] = useState<string>("PLAYER")
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
@@ -118,9 +118,17 @@ export const Signup = () => {
                                controlId="passwordconfirmation" type="password"
                     />
                 </Row>
+                <Row className="align-items-center">
+                    <Col sm={3}>
+                        <Button variant="outline-warning" className="mt-3" onClick={submitForm} >S'inscrire</Button>
+                    </Col>
+                    <Col>
+                        <Link color="outline-warning" to={"/"}>Avez-vous un compte? Se connecter</Link>
+                    </Col>
+                </Row>
 
-                <Button variant="outline-warning" className="mt-3" onClick={submitForm} >S'inscrire</Button>
-                <Link color="outline-warning" to={"/"}>Avez-vous un compte? Se connecter</Link>
+
+
             </div>
         </Container>
     );

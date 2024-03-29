@@ -97,11 +97,18 @@ export const Login = () =>{
                     />
                 </Row>
 
-                <Button variant="outline-warning" className="mt-3" onClick={submitForm} >Se connecter</Button>
+                <Row className="align-items-center">
+                    <Col sm={3}>
+                        <Button variant="outline-warning" className="mt-3" onClick={submitForm} >Se connecter</Button>
+                    </Col>
+                    <Col>
+                        <Link to={"/signup"}>Vous n'avez pas de compte ? S'inscrire</Link>
+                    </Col>
+                </Row>
 
-                <Link color="outline-warning" to={"/signup"}>Vous n'avez pas de compte ? s'inscrire</Link>
+
                 {!areCredentialsValid && (
-                    <Alert variant="danger mt-3">Le nom d'ussager ou le mot de passe est invalide"</Alert>
+                    <Alert variant="warning mt-3">Le nom d'usager ou le mot de passe est invalide</Alert>
                 )}
             </div>
         </Container>
