@@ -9,6 +9,13 @@ export const getClientById = async (id: number): Promise<AxiosResponse<Client>> 
     return http.get<Client>(`${CLIENT_PREFIX}/${id}`);
 };
 
+export const updateClientRole = async (clientId: number) => {
+    return http.put<Client>(`${CLIENT_PREFIX}/${clientId}`, null,{
+        params: {
+            clientId
+        }
+    });
+}
 
 export const createCharacter = async (character: Character, clientId: number) => {
     return http.post(CHARACTER_PREFIX, character, {

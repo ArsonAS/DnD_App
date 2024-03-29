@@ -1,16 +1,20 @@
 import React, {useEffect, useState} from "react";
 import {Client} from "../models/Client";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
-import {Button, ButtonGroup, Col, Container, Form, FormControl, Row} from "react-bootstrap";
-import {getAllCharactersByClientId, getClientById} from "../services/clientService";
+import {Button, ButtonGroup, Col, Container, FormCheck, FormControl, Row} from "react-bootstrap";
+import Form from 'react-bootstrap/Form';
+import {getAllCharactersByClientId, getClientById, updateClientRole} from "../services/clientService";
 import {getClientId, logout} from "../security/authService";
 import {NavBar} from "./NavBar";
 import {Character} from "../models/Character";
 import {CharacterList} from "./CharacterList";
+import FormInput from "./FormInput";
+import Switch from "react-bootstrap-switch";
 
 export const Dashboard = () => {
     const [client, setClient] = useState<Client>();
     const [characters, setCharacters] = useState<Character[]>([]);
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const params = useParams();
@@ -36,6 +40,12 @@ export const Dashboard = () => {
     const goToCreateCharacter = () => {
         navigate("/character/new");
     }
+    const onSwitchAction = () => {
+        const id = getClientId()
+        updateClientRole(parseInt(id!)).then(() => {
+            window.location.reload();
+        });
+    };
 
     return (
         <Container fluid className="p-2 bg-dark vh-100 text-warning">
@@ -51,7 +61,6 @@ export const Dashboard = () => {
                             ?
                             <ButtonGroup>
                                 <Button variant="warning">Créer une campaign</Button>
-                                <Button>Créer un PNJ</Button>
                             </ButtonGroup>
                             :
                             <ButtonGroup>
@@ -64,10 +73,17 @@ export const Dashboard = () => {
                     <NavBar/>
                 </Col>
             </Row>
+            <Row className="px-3 mb-5">
+                {client?.role === "DM"
+                    ?
+                    <Button variant="warning" onClick={onSwitchAction}>Voir la page en tant que joueur</Button>
+                    :
+                    <Button variant="warning" onClick={onSwitchAction}>Voir la page en tant que MD</Button>
+                }
+            </Row>
             <Col sm={{span: 5, offset: 0}}>
                 <CharacterList characters={characters}/>
             </Col>
-
 
 
         </Container>
