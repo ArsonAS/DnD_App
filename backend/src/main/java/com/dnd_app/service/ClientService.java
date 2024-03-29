@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -65,6 +66,12 @@ public class ClientService {
 
     public Optional<CharacterDTO> findCharacterById(Long characterId){
         return Optional.of(new CharacterDTO(characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"))));
+    }
+
+    public List<CharacterDTO> findAllCharactersByClientId(Long clientId){
+        Client client = clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"));
+
+        return characterRepository.findAllByClient(client).stream().map(CharacterDTO::new).toList();
     }
 
 

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/clients")
@@ -22,6 +24,12 @@ public class ClientController {
                 .map(client -> ResponseEntity.ok(client))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/characters")
+    public ResponseEntity<List<CharacterDTO>> getAllCharactersByClientId(@RequestParam("clientId") Long clientId){
+        return ResponseEntity.ok(clientService.findAllCharactersByClientId(clientId));
+    }
+
 
     @PostMapping("/characters")
     public ResponseEntity<HttpStatus> createCharacter(@RequestBody CharacterDTO characterDTO, @RequestParam Long clientId){

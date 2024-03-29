@@ -41,7 +41,6 @@ public class DnDApplication implements CommandLineRunner {
                         .alignment("Neutral")
                         .experiencePoints(1800)
                         .characterAbilityScores(new CharacterAbilityScores(10, 10, 10, 10, 10, 10))
-
                 .build(), 1L);
     }
 }
