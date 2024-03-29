@@ -20,7 +20,7 @@ export const NavBar = () => {
         <Navbar className="bg-dark text-warning">
             <Container className="flex-row justify-content-between">
                 <Navbar.Brand className="bg-dark text-warning" onClick={goToDashboard}>Page Principal</Navbar.Brand>
-                <Button variant="outline-warning" onClick={disconnect} className="me-2">Se déconnecter</Button>
+                <Button variant="outline-warning" onClick={disconnect} className="me-2">Déconnexion</Button>
             </Container>
         </Navbar>
 
