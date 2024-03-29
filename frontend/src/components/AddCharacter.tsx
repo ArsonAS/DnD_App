@@ -59,7 +59,6 @@ export const AddCharacter = () => {
         })
     }
 
-
     const validateForm = (): boolean => {
         let isFormValid = true;
         let errorsToDisplay: string[] = [];
@@ -73,7 +72,7 @@ export const AddCharacter = () => {
 
     const validateName = (errorsToDisplay: string[]): boolean => {
         if (name === "") {
-            errorsToDisplay.push("Le Nom d'usager ne peut pas être vide");
+            errorsToDisplay.push("Le Nom ne peut pas être vide");
             return false;
         }
 
@@ -94,7 +93,7 @@ export const AddCharacter = () => {
                     <Col>
                         <Form.Group controlId="classe">
                             <Form.Label sm={3}>Choisissez une classe</Form.Label>
-                            <FormControl as="select" onChange={(e) => setClasse(e.target.value)}>
+                            <FormControl as="select" onChange={(e) => setClasse(e.target.value)} defaultValue={"Barbare"}>
                                 <option value={"Barbare"}>Barbare</option>
                                 <option value={"Barde"}>Barde</option>
                                 <option value={"Clerc"}>Clerc</option>
@@ -120,7 +119,7 @@ export const AddCharacter = () => {
                     </Col>
                     <Col>
                         <FormInput label="Points d'experience" value={experiencePoints.toString()} onChange={(e)=> setExperiencePoints(parseInt(e.target.value))}
-                                   errors={errors} formError=" "
+                                   errors={errors} formError=""
                                    controlId="experiencePoints"
                         />
                     </Col>
@@ -130,7 +129,7 @@ export const AddCharacter = () => {
                     <Col >
                         <Form.Group controlId="background">
                             <Form.Label sm={3}>Choisissez un origine</Form.Label>
-                            <FormControl as="select" onChange={(e) => setBackground(e.target.value)}>
+                            <FormControl as="select" onChange={(e) => setBackground(e.target.value)} defaultValue={"Acolyte"}>
                                 <option value={"Acolyte"}>Acolyte</option>
                                 <option value={"Charlatan"}>Charlatan</option>
                                 <option value={"Criminel"}>Criminel</option>
@@ -147,7 +146,7 @@ export const AddCharacter = () => {
                     <Col >
                         <Form.Group controlId="race">
                             <Form.Label sm={3}>Choisissez une race</Form.Label>
-                            <FormControl as="select" onChange={(e) => setRace(e.target.value)}>
+                            <FormControl as="select" onChange={(e) => setRace(e.target.value)} defaultValue={"Humaine"}>
                                 <option value={"Humaine"}>Humaine</option>
                                 <option value={"Elfe"}>Elfe</option>
                                 <option value={"Halfelin"}>Halfelin</option>
@@ -160,7 +159,7 @@ export const AddCharacter = () => {
                     <Col>
                         <Form.Group controlId="alignment">
                             <Form.Label sm={3}>Choisissez un alignment</Form.Label>
-                            <FormControl as="select" onChange={(e) => setAlignment(e.target.value)}>
+                            <FormControl as="select" onChange={(e) => setAlignment(e.target.value)} defaultValue={"Bien légitime"}>
                                 <option value={"Bien légitime"}>Bien légitime</option>
                                 <option value={"Bien neutre"}>Neutre bien</option>
                                 <option value={"Bien chaotique"}>Bien chaotique</option>
@@ -177,13 +176,13 @@ export const AddCharacter = () => {
                 <Row>
                     <Col>
                         <FormInput label="Force" value={strength.toString()} onChange={(e)=> setStrength(parseInt(e.target.value))}
-                                   errors={errors} formError=" "
+                                   errors={errors} formError=""
                                    controlId="strength"
                         />
                     </Col>
                     <Col>
                         <FormInput label="Dextérité" value={dexterity.toString()} onChange={(e)=> setDexterity(parseInt(e.target.value))}
-                                   errors={errors} formError=" "
+                                   errors={errors} formError=""
                                    controlId="dexterity"
                         />
                     </Col>
