@@ -32,14 +32,8 @@ public class ClientController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/characters")
-    public ResponseEntity<List<CharacterDTO>> getAllCharactersByClientId(@RequestParam("clientId") Long clientId){
-        return ResponseEntity.ok(clientService.findAllCharactersByClientId(clientId));
-    }
-
-
     @PostMapping("/characters")
-    public ResponseEntity<HttpStatus> createCharacter(@RequestBody CharacterDTO characterDTO, @RequestParam Long clientId){
+    public ResponseEntity<HttpStatus> createCharacter(@RequestBody CharacterDTO characterDTO, @RequestParam("clientId") Long clientId){
         return clientService.createCharacter(characterDTO, clientId)
                 .map(character -> new ResponseEntity<HttpStatus>(HttpStatus.CREATED))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -51,6 +45,12 @@ public class ClientController {
                 .map(character -> ResponseEntity.ok(character))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/characters")
+    public ResponseEntity<List<CharacterDTO>> getAllCharactersByClientId(@RequestParam("clientId") Long clientId){
+        return ResponseEntity.ok(clientService.findAllCharactersByClientId(clientId));
+    }
+
 
 
 }
