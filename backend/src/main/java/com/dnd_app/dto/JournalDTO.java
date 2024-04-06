@@ -1,9 +1,6 @@
 package com.dnd_app.dto;
 
-import com.dnd_app.model.Character.Character;
-import com.dnd_app.model.Party;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.dnd_app.model.Journal;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,13 +19,15 @@ public class PartyDTO {
 
     private Long character5Id;
 
-    public PartyDTO(Party party) {
-        this.id = party.getId();
-        this.character1Id = party.getCharacter1().getId();
-        this.character2Id = party.getCharacter2().getId();
-        this.character3Id = party.getCharacter3().getId();
-        this.character4Id = party.getCharacter4().getId();
-        this.character5Id = party.getCharacter5().getId();
+    private Long campaignId;
+
+    public PartyDTO(Journal journal) {
+        this.id = journal.getId();
+        this.character1Id = journal.getCharacter1().getId();
+        this.character2Id = journal.getCharacter2().getId();
+        this.character3Id = journal.getCharacter3().getId();
+        this.character4Id = journal.getCharacter4().getId();
+        this.character5Id = journal.getCharacter5().getId();
     }
 
     @Builder(builderMethodName = "partyDTOBuilder")
