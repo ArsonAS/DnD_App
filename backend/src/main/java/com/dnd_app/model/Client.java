@@ -4,6 +4,7 @@ import com.dnd_app.model.Character.Character;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,8 @@ public class Client {
     private List<Campaign> campaigns;
 
     @Builder(builderMethodName = "clientBuilder")
-    public Client(String username, String email, String password, String role) {
+    public Client(Long id, String username, String email, String password, String role) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
