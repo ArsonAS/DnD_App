@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CharacterRepository extends JpaRepository<Character, Long> {
     List<Character> findAllByClient(Client client);
+    List<Character> findAllByCampaignsId(Long campaignId);
 }
