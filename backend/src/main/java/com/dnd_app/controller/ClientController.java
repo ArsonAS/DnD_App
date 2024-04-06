@@ -65,6 +65,23 @@ public class ClientController {
     public ResponseEntity<List<CampaignDTO>> getAllCampaignsByClientId(@RequestParam("clientId") Long clientId){
         return ResponseEntity.ok(clientService.findAllCampaignsByClientId(clientId));
     }
+    @PutMapping("/campaign_character")
+    public ResponseEntity<CampaignDTO> addCharacterToCampaign(@RequestParam("charId") Long charId, @RequestParam("campaignId") Long campaignId){
+        return clientService.addCharacterToCampaign(charId, campaignId)
+                .map(campaign -> ResponseEntity.ok(campaign))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/campaign_characters")
+    public ResponseEntity<List<CharacterDTO>> getAllCharactersByCampaignId(@RequestParam("campaignId") Long campaignId){
+        return ResponseEntity.ok(clientService.findAllCharactersByCampaignId(campaignId));
+    }
+
+    @GetMapping("/character_campaigns")
+    public ResponseEntity<List<CampaignDTO>> getAllCampaignsByCharacterId(@RequestParam("charId") Long charId){
+        return ResponseEntity.ok(clientService.findAllCampaignsByCharacterId(charId));
+    }
+
 
 
 
