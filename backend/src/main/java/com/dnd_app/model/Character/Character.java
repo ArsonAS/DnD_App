@@ -1,11 +1,17 @@
 package com.dnd_app.model.Character;
 
+import com.dnd_app.model.Campaign;
 import com.dnd_app.model.Client;
+import com.dnd_app.model.Journal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,6 +39,16 @@ public class Character {
     @JoinColumn(name = "client_id")
     @ToString.Exclude
     private Client client;
+
+
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "characters")
+    //@JoinColumn(name = "campaign_id")
+    @ToString.Exclude
+    private List<Campaign> campaigns = new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL)
+    private List<Journal> journalEntries;
 
 
     @Builder(builderMethodName = "characterBuilder")
