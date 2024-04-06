@@ -1,10 +1,13 @@
 package com.dnd_app.service;
 
+import com.dnd_app.dto.CampaignDTO;
 import com.dnd_app.dto.CharacterDTO;
 import com.dnd_app.dto.ClientDTO;
+import com.dnd_app.model.Campaign;
 import com.dnd_app.model.Character.Character;
 import com.dnd_app.model.Salt;
 import com.dnd_app.model.Client;
+import com.dnd_app.repository.CampaignRepository;
 import com.dnd_app.repository.CharacterRepository;
 import com.dnd_app.repository.SaltRepository;
 import com.dnd_app.repository.ClientRepository;
@@ -21,12 +24,14 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final SaltRepository saltRepository;
     private final CharacterRepository characterRepository;
+    private CampaignRepository campaignRepository;
 
     public ClientService(ClientRepository clientRepository, SaltRepository saltRepository,
-                         CharacterRepository characterRepository) {
+                         CharacterRepository characterRepository, CampaignRepository campaignRepository) {
         this.clientRepository = clientRepository;
         this.saltRepository = saltRepository;
         this.characterRepository = characterRepository;
+        this.campaignRepository = campaignRepository;
     }
 
 
@@ -49,7 +54,6 @@ public class ClientService {
         hashAndSaltPassword(newClient);
         return Optional.of(new ClientDTO(clientRepository.save(newClient)));
     }
-
     public Optional<ClientDTO> findClientById(Long clientId){
         return Optional.of(new ClientDTO(clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"))));
     }
@@ -64,6 +68,7 @@ public class ClientService {
         return Optional.of(new ClientDTO(clientRepository.save(client)));
     }
 
+    @Transactional
     public Optional<CharacterDTO> createCharacter (CharacterDTO characterDTO, Long clientId){
         if(characterDTO == null) throw new IllegalArgumentException("Character cannot be null");
 
@@ -73,15 +78,52 @@ public class ClientService {
 
         return Optional.of(new CharacterDTO(characterRepository.save(newCharacter)));
     }
-
     public Optional<CharacterDTO> findCharacterById(Long characterId){
         return Optional.of(new CharacterDTO(characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"))));
     }
-
     public List<CharacterDTO> findAllCharactersByClientId(Long clientId){
         Client client = clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"));
 
         return characterRepository.findAllByClient(client).stream().map(CharacterDTO::new).toList();
+    }
+
+
+    @Transactional
+    public Optional<CampaignDTO> createCampaign(CampaignDTO campaignDTO, Long clientId){
+        if (campaignDTO == null) throw new IllegalArgumentException("Campaign cannot be null");
+
+        Client client = clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"));
+        Campaign newCampaign = campaignDTO.fromDTO();
+        newCampaign.setClient(client);
+
+        return Optional.of(new CampaignDTO(campaignRepository.save(newCampaign)));
+    }
+    public Optional<CampaignDTO> findCampaignById(Long campaignId){
+        return Optional.of(new CampaignDTO(campaignRepository.findById(campaignId).orElseThrow(() -> new NoSuchElementException("Campaign not found"))));
+    }
+    public List<CampaignDTO> findAllCampaignsByClientId(Long clientId){
+        Client client = clientRepository.findById(clientId).orElseThrow(() -> new NoSuchElementException("Client not found"));
+
+        return campaignRepository.findAllByClient(client).stream().map(CampaignDTO::new).toList();
+    }
+
+    public Optional<CampaignDTO> addCharacterToCampaign(Long characterId, Long campaignId){
+        Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
+        Campaign campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new NoSuchElementException("Campaign not found"));
+
+        campaign.getCharacters().add(character);
+        return Optional.of(new CampaignDTO(campaignRepository.save(campaign)));
+    }
+
+    public List<CharacterDTO> findAllCharactersByCampaignId(Long campaignId){
+        Campaign campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new NoSuchElementException("Campaign not found"));
+        return characterRepository.findAllByCampaignsId(campaign.getId()).stream().map(CharacterDTO::new).toList();
+    }
+
+
+    public List<CampaignDTO> findAllCampaignsByCharacterId(Long characterId){
+        Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
+        return campaignRepository.findAllByCharactersId(character.getId()).stream().map(CampaignDTO::new).toList();
     }
 
 
