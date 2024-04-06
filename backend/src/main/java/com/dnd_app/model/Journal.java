@@ -5,49 +5,32 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Party {
+public class Journal {
     @Id
     @SequenceGenerator(name = "parti_gen", sequenceName = "parti_sec", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parti_gen")
     private Long id;
+    private String entry;
+    private LocalDate entryDate;
 
     @ManyToOne
-    @JoinColumn(name = "character_1_id")
-    private Character character1;
+    @JoinColumn(name = "character_id")
+    @ToString.Exclude
+    private Character character;
 
-    @ManyToOne
-    @JoinColumn(name = "character_2_id")
-    private Character character2;
-
-    @ManyToOne
-    @JoinColumn(name = "character_3_id")
-    private Character character3;
-
-    @ManyToOne
-    @JoinColumn(name = "character_4_id")
-    private Character character4;
-
-    @ManyToOne
-    @JoinColumn(name = "character_5_id")
-    private Character character5;
-
-    @OneToOne
-    private Campaign campaign;
-
-
-
-    @Builder(builderMethodName = "partyBuilder")
-    public Party(Character character1, Character character2, Character character3,
-                 Character character4, Character character5, Campaign campaign) {
-        this.character1 = character1;
-        this.character2 = character2;
-        this.character3 = character3;
-        this.character4 = character4;
-        this.character5 = character5;
-        this.campaign = campaign;
+    @Builder(builderMethodName = "journalBuilder")
+    public Journal(Long id, String entry, LocalDate entryDate, Character character) {
+        this.id = id;
+        this.entry = entry;
+        this.entryDate = entryDate;
+        this.character = character;
     }
 }

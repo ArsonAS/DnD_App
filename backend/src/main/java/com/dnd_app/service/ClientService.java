@@ -3,14 +3,13 @@ package com.dnd_app.service;
 import com.dnd_app.dto.CampaignDTO;
 import com.dnd_app.dto.CharacterDTO;
 import com.dnd_app.dto.ClientDTO;
+import com.dnd_app.dto.JournalDTO;
 import com.dnd_app.model.Campaign;
 import com.dnd_app.model.Character.Character;
+import com.dnd_app.model.Journal;
 import com.dnd_app.model.Salt;
 import com.dnd_app.model.Client;
-import com.dnd_app.repository.CampaignRepository;
-import com.dnd_app.repository.CharacterRepository;
-import com.dnd_app.repository.SaltRepository;
-import com.dnd_app.repository.ClientRepository;
+import com.dnd_app.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -25,13 +24,16 @@ public class ClientService {
     private final SaltRepository saltRepository;
     private final CharacterRepository characterRepository;
     private CampaignRepository campaignRepository;
+    private JournalRepository journalRepository;
 
     public ClientService(ClientRepository clientRepository, SaltRepository saltRepository,
-                         CharacterRepository characterRepository, CampaignRepository campaignRepository) {
+                         CharacterRepository characterRepository, CampaignRepository campaignRepository,
+                         JournalRepository journalRepository) {
         this.clientRepository = clientRepository;
         this.saltRepository = saltRepository;
         this.characterRepository = characterRepository;
         this.campaignRepository = campaignRepository;
+        this.journalRepository = journalRepository;
     }
 
 
@@ -120,11 +122,22 @@ public class ClientService {
         return characterRepository.findAllByCampaignsId(campaign.getId()).stream().map(CharacterDTO::new).toList();
     }
 
-
     public List<CampaignDTO> findAllCampaignsByCharacterId(Long characterId){
         Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
         return campaignRepository.findAllByCharactersId(character.getId()).stream().map(CampaignDTO::new).toList();
     }
+
+    @Transactional
+    public Optional<JournalDTO> createJournalEntry(JournalDTO journalDTO){
+        if (journalDTO == null) throw new IllegalArgumentException("Journal cannot be null");
+
+        Character character = characterRepository.findById(journalDTO.getCharacterId()).orElseThrow(() -> new NoSuchElementException("Character not found"));
+        Journal newJournalEntry = journalDTO.fromDTO();
+        newJournalEntry.setCharacter(character);
+
+        return Optional.of(new JournalDTO(journalRepository.save(newJournalEntry)));
+    }
+
 
 
 
