@@ -35,6 +35,7 @@ public class ClientDTO {
 
     public Client fromDTO(){
         return Client.clientBuilder()
+                .id(id)
                 .username(username)
                 .email(email)
                 .password(password)

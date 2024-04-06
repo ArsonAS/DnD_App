@@ -60,6 +60,7 @@ public class CharacterDTO {
 
     public Character fromDTO(){
         return Character.characterBuilder()
+                .id(id)
                 .name(name)
                 .classe(classe)
                 .level(level)
