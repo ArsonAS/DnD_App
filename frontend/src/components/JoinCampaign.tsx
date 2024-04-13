@@ -23,10 +23,6 @@ export const JoinCampaign = ({show, handleClose, characters, campaignId}: Props)
             window.location.reload();
 
         })
-
-
-
-
     }
 
     const characterList = characters.map(
