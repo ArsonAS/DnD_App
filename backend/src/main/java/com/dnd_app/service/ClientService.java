@@ -108,6 +108,10 @@ public class ClientService {
 
         return campaignRepository.findAllByClient(client).stream().map(CampaignDTO::new).toList();
     }
+    public List<CampaignDTO> findAllActiveCampaigns(){
+        return campaignRepository.findAllByFinished(false).stream().map(CampaignDTO::new).toList();
+    }
+    @Transactional
     public Optional<CampaignDTO> addCharacterToCampaign(Long characterId, Long campaignId){
         Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
         Campaign campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new NoSuchElementException("Campaign not found"));
@@ -133,6 +137,9 @@ public class ClientService {
         newJournalEntry.setCharacter(character);
 
         return Optional.of(new JournalDTO(journalRepository.save(newJournalEntry)));
+    }
+    public Optional<JournalDTO> findJournalEntryById(Long journalId){
+        return Optional.of(new JournalDTO(journalRepository.findById(journalId).orElseThrow(() -> new NoSuchElementException("Entry not found"))));
     }
     public List<JournalDTO> findAllJournalEntriesByCharacterId(Long characterId){
         Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));

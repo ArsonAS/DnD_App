@@ -12,5 +12,7 @@ public interface CampaignRepository extends JpaRepository<Campaign, Long> {
     Optional<Campaign> findByName(String name);
     List<Campaign> findAllByCharactersId(Long characterId);
     List<Campaign> findAllByClient(Client client);
+    List<Campaign>findAllByFinished(boolean isFinished);
+
 
 }

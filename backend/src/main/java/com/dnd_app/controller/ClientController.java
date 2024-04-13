@@ -22,13 +22,13 @@ public class ClientController {
     @GetMapping("/{id}")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable Long id){
         return clientService.findClientById(id)
-                .map(client -> ResponseEntity.ok(client))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @PutMapping("/{id}")
     public ResponseEntity<ClientDTO> updateClientById(@RequestParam("clientId") Long clientId){
         return clientService.updateRoleById(clientId)
-                .map(client -> ResponseEntity.ok(client))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -41,7 +41,7 @@ public class ClientController {
     @GetMapping("/character")
     public ResponseEntity<CharacterDTO> getCharacterById(@RequestParam("charId") Long charId){
         return clientService.findCharacterById(charId)
-                .map(character -> ResponseEntity.ok(character))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @GetMapping("/characters")
@@ -59,17 +59,21 @@ public class ClientController {
     @GetMapping("/campaign")
     public ResponseEntity<CampaignDTO> getCampaignById(@RequestParam("campaignId") Long campaignId){
         return clientService.findCampaignById(campaignId)
-                .map(campaign -> ResponseEntity.ok(campaign))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @GetMapping("/campaigns")
     public ResponseEntity<List<CampaignDTO>> getAllCampaignsByClientId(@RequestParam("clientId") Long clientId){
         return ResponseEntity.ok(clientService.findAllCampaignsByClientId(clientId));
     }
+    @GetMapping("/active_campaigns")
+    public ResponseEntity<List<CampaignDTO>> getAllActiveCampaigns(){
+        return ResponseEntity.ok(clientService.findAllActiveCampaigns());
+    }
     @PutMapping("/campaign_character")
     public ResponseEntity<CampaignDTO> addCharacterToCampaign(@RequestParam("charId") Long charId, @RequestParam("campaignId") Long campaignId){
         return clientService.addCharacterToCampaign(charId, campaignId)
-                .map(campaign -> ResponseEntity.ok(campaign))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -84,21 +88,20 @@ public class ClientController {
     }
 
     @PostMapping("/journal_entries")
-    public ResponseEntity<HttpStatus> createJournalEntrie(@RequestBody JournalDTO journalDTO, @RequestParam("charId") Long charId){
+    public ResponseEntity<HttpStatus> createJournalEntry(@RequestBody JournalDTO journalDTO, @RequestParam("charId") Long charId){
         return clientService.createJournalEntry(journalDTO, charId)
                 .map(journalEntry -> new ResponseEntity<HttpStatus>(HttpStatus.CREATED))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+    @GetMapping("/journal_entry")
+    public ResponseEntity<JournalDTO> getJournalEntryById(@RequestParam("journalId") Long journalId){
+        return clientService.findJournalEntryById(journalId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/journal_entries")
     public ResponseEntity<List<JournalDTO>> getAllJournalEntriesByCharacterId(@RequestParam("charId") Long charId){
         return ResponseEntity.ok(clientService.findAllJournalEntriesByCharacterId(charId));
     }
-
-
-
-
-
-
-
 }
