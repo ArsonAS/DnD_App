@@ -35,7 +35,7 @@ export const CharacterPage = () => {
                             <Col sm={{span: 3, offset: 0}} className="bg-dark bg-gradient border border-warning px-2 py-1">
                                 <h4>{character?.name}</h4>
                             </Col>
-                            <Col className="bg-dark bg-gradient border border-warning px-2 py-2">
+                            <Col className="bg-dark border border-warning px-2 py-2">
                                 <Row className="px-2 flex-row justify-content-around">
                                     <h5>Race: {character?.race}</h5>
                                     <h5>Classe: {character?.classe}</h5>
@@ -45,7 +45,7 @@ export const CharacterPage = () => {
                         </Row>
                     </Col>
 
-                    <Col sm={{span: 3, offset: 0}} className="flex-column border border-warning vh-100 overflow-auto">
+                    <Col sm={{span: 3, offset: 0}} className="flex-column border border-warning vh-100 overflow-auto pb-5 mb-5">
                         <p>Acrobaties</p>
                         <p>Manipulation des animaux</p>
                         <p>Arcanes</p>

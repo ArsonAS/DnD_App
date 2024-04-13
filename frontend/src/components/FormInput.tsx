@@ -21,8 +21,8 @@ const FormInput = ({label, value, onChange, errors, formError, controlId, type, 
                     <Form.Label sm={3}>{label}</Form.Label>
                     <Form.Control type={type ?? "text"} value={value} onChange={onChange} placeholder={placeholder}/>
                     {errors.includes(formError)
-                        ? (<p className="error fade-in">{formError}</p>)
-                        : (<div className="error" />)}
+                        ? (<p className="error text-warning">{formError}</p>)
+                        : (<div className="error text-warning" />)}
                 </Form.Group>
             </Col>
         </>

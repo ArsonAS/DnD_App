@@ -2,22 +2,28 @@ import React, {useEffect, useState} from "react";
 import {Client} from "../models/Client";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, ButtonGroup, Col, Container, FormCheck, FormControl, Row} from "react-bootstrap";
-import Form from 'react-bootstrap/Form';
-import {getAllCharactersByClientId, getClientById, updateClientRole} from "../services/clientService";
+import {
+    getAllActiveCampaigns,
+    getAllCampaignsByClientId,
+    getAllCharactersByClientId,
+    getClientById,
+    updateClientRole
+} from "../services/clientService";
 import {getClientId, logout} from "../security/authService";
 import {NavBar} from "./NavBar";
 import {Character} from "../models/Character";
+import {Campaign} from "../models/Campaign";
 import {CharacterList} from "./CharacterList";
-import FormInput from "./FormInput";
-import Switch from "react-bootstrap-switch";
+import {CampaignList} from "./CampaignList";
+import {AddCampaign} from "./AddCampaign";
 
 export const Dashboard = () => {
+    const [show, setShow] = useState<boolean>(false);
     const [client, setClient] = useState<Client>();
     const [characters, setCharacters] = useState<Character[]>([]);
-    const [isSwitchOn, setIsSwitchOn] = useState(false);
+    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const navigate = useNavigate();
-    const location = useLocation();
-    const params = useParams();
+
 
     useEffect(() => {
         if (client !== undefined) return;
@@ -31,11 +37,31 @@ export const Dashboard = () => {
 
     useEffect(() => {
         if (client === undefined) return;
+        const clientId = getClientId();
+        if (!clientId) return;
 
-        getAllCharactersByClientId(client.id!).then((response) => {
-            setCharacters(response.data);
-        })
-    }, [client, setCharacters]);
+
+        const fetchData = async () => {
+            if (client.role === "DM"){
+                const campaignsRes = await getAllCampaignsByClientId(parseInt(clientId));
+                if(campaignsRes.data) setCampaigns(campaignsRes.data);
+
+            }
+            if (client.role === "PLAYER"){
+                const charRes = await getAllCharactersByClientId(parseInt(clientId));
+                if (charRes.data) setCharacters(charRes.data);
+
+
+                const activeCampaignsRes = await getAllActiveCampaigns();
+                if (activeCampaignsRes.data && charRes.data.length > 0) setCampaigns(activeCampaignsRes.data);
+
+            }
+        }
+        fetchData();
+
+    }, [client, setCampaigns, setCharacters]);
+
+
 
     const goToCreateCharacter = () => {
         navigate("/character/new");
@@ -47,8 +73,11 @@ export const Dashboard = () => {
         });
     };
 
+    const handleOpen = () => setShow(true);
+    const handleClose = () => setShow(false);
+
     return (
-        <Container fluid className="p-2 bg-dark vh-100 text-warning">
+        <Container fluid className="p-2 bg-dark text-warning min-vh-100">
             <Row className="px-3 sticky-top mb-5 py-2 border border-bottom-2 border-left-0 border-right-0 border-warning align-items-baseline">
                 <Col sm={{span: 3, offset: 0}} className="bg-dark px-2 py-1 align-items-baseline">
                     <p>
@@ -60,7 +89,7 @@ export const Dashboard = () => {
                         {client?.role === "DM"
                             ?
                             <ButtonGroup>
-                                <Button variant="warning">Créer une campaign</Button>
+                                <Button variant="warning" onClick={handleOpen}>Créer une campagne</Button>
                             </ButtonGroup>
                             :
                             <ButtonGroup>
@@ -75,15 +104,23 @@ export const Dashboard = () => {
             </Row>
             <Row className="px-3 mb-5">
                 {client?.role === "DM"
-                    ?
-                    <Button variant="warning" onClick={onSwitchAction}>Voir la page en tant que joueur</Button>
-                    :
-                    <Button variant="warning" onClick={onSwitchAction}>Voir la page en tant que MD</Button>
+                    ? <Button variant="warning" onClick={onSwitchAction}>Voir la page en tant que joueur</Button>
+                    : <Button variant="warning" onClick={onSwitchAction}>Voir la page en tant que MD</Button>
                 }
             </Row>
-            <Col sm={{span: 5, offset: 0}}>
-                <CharacterList characters={characters}/>
-            </Col>
+            <Row>
+                <Col sm={{span: 6, offset: 0}}>
+                    {client?.role === "DM"
+                        ? <CampaignList campaigns={campaigns}/>
+                        : <CharacterList characters={characters}/>
+                    }
+                </Col>
+                <Col sm={{span: 4, offset: 0}}>
+                    {client?.role === "PLAYER" &&  <CampaignList campaigns={campaigns}/>}
+                </Col>
+            </Row>
+
+            {show && (<AddCampaign show={show} handleClose={handleClose} clientId={client?.id!}/>)}
 
 
         </Container>

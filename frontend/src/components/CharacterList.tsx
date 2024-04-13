@@ -1,7 +1,8 @@
 import {Character} from "../models/Character";
 import {Button, Table} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {getClientId} from "../security/authService";
+import {Client} from "../models/Client";
 
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 export const CharacterList = ({characters}: Props) => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleclick = (id:number|undefined) => {
         if (id !== undefined) navigate("/characterpage/" + id);
@@ -28,10 +30,11 @@ export const CharacterList = ({characters}: Props) => {
         }
     );
 
-
     return (
-        <Table className="text-warning border border-warning align-items-baseline">
-            {characterList}
+        <Table className="text-warning border border-warning align-items-baseline overflow-auto">
+            <tbody>
+                {characterList}
+            </tbody>
         </Table>
     );
 
