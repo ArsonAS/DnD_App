@@ -3,6 +3,7 @@ package com.dnd_app.controller;
 import com.dnd_app.dto.CampaignDTO;
 import com.dnd_app.dto.CharacterDTO;
 import com.dnd_app.dto.ClientDTO;
+import com.dnd_app.dto.JournalDTO;
 import com.dnd_app.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,18 @@ public class ClientController {
     @GetMapping("/character_campaigns")
     public ResponseEntity<List<CampaignDTO>> getAllCampaignsByCharacterId(@RequestParam("charId") Long charId){
         return ResponseEntity.ok(clientService.findAllCampaignsByCharacterId(charId));
+    }
+
+    @PostMapping("/journal_entries")
+    public ResponseEntity<HttpStatus> createJournalEntrie(@RequestBody JournalDTO journalDTO, @RequestParam("charId") Long charId){
+        return clientService.createJournalEntry(journalDTO, charId)
+                .map(journalEntry -> new ResponseEntity<HttpStatus>(HttpStatus.CREATED))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/journal_entries")
+    public ResponseEntity<List<JournalDTO>> getAllJournalEntriesByCharacterId(@RequestParam("charId") Long charId){
+        return ResponseEntity.ok(clientService.findAllJournalEntriesByCharacterId(charId));
     }
 
 

@@ -108,7 +108,6 @@ public class ClientService {
 
         return campaignRepository.findAllByClient(client).stream().map(CampaignDTO::new).toList();
     }
-
     public Optional<CampaignDTO> addCharacterToCampaign(Long characterId, Long campaignId){
         Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
         Campaign campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new NoSuchElementException("Campaign not found"));
@@ -116,32 +115,28 @@ public class ClientService {
         campaign.getCharacters().add(character);
         return Optional.of(new CampaignDTO(campaignRepository.save(campaign)));
     }
-
     public List<CharacterDTO> findAllCharactersByCampaignId(Long campaignId){
         Campaign campaign = campaignRepository.findById(campaignId).orElseThrow(() -> new NoSuchElementException("Campaign not found"));
         return characterRepository.findAllByCampaignsId(campaign.getId()).stream().map(CharacterDTO::new).toList();
     }
-
     public List<CampaignDTO> findAllCampaignsByCharacterId(Long characterId){
         Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
         return campaignRepository.findAllByCharactersId(character.getId()).stream().map(CampaignDTO::new).toList();
     }
 
     @Transactional
-    public Optional<JournalDTO> createJournalEntry(JournalDTO journalDTO){
+    public Optional<JournalDTO> createJournalEntry(JournalDTO journalDTO, Long characterId){
         if (journalDTO == null) throw new IllegalArgumentException("Journal cannot be null");
 
-        Character character = characterRepository.findById(journalDTO.getCharacterId()).orElseThrow(() -> new NoSuchElementException("Character not found"));
+        Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
         Journal newJournalEntry = journalDTO.fromDTO();
         newJournalEntry.setCharacter(character);
 
         return Optional.of(new JournalDTO(journalRepository.save(newJournalEntry)));
     }
-
-
-
-
-
-
+    public List<JournalDTO> findAllJournalEntriesByCharacterId(Long characterId){
+        Character character = characterRepository.findById(characterId).orElseThrow(() -> new NoSuchElementException("Character not found"));
+        return journalRepository.findAllByCharacter(character).stream().map(JournalDTO::new).toList();
+    }
 
 }
