@@ -63,32 +63,28 @@ export const AddCharacter = () => {
         let isFormValid = true;
         let errorsToDisplay: string[] = [];
 
-        if (!validateName(errorsToDisplay)) isFormValid = false;
+        if (name === "") {
+            errorsToDisplay.push("Le Nom du charactere ne peut pas être vide");
+            isFormValid = false;
+        }
+        console.log(errors)
 
         setErrors(errorsToDisplay);
-
         return isFormValid;
     };
 
-    const validateName = (errorsToDisplay: string[]): boolean => {
-        if (name === "") {
-            errorsToDisplay.push("Le Nom ne peut pas être vide");
-            return false;
-        }
-
-        return true;
-    };
 
 
     return (
         <Container fluid className="p-2 bg-dark vh-100">
-            <div className="p-2 m-5 bg-dark text-warning border border-warning rounded vh-50 vw-50 align-content-center">
+            <div className="p-2 m-5 bg-dark text-warning border border-warning rounded align-content-center">
                 <Row>
                     <Col>
                         <FormInput label="Nom du charactere" value={name} onChange={(e)=> setName(e.target.value)}
                                    errors={errors} formError="Le Nom du charactere ne peut pas être vide"
-                                   controlId="name"
+                                   controlId="charName"
                         />
+
                     </Col>
                     <Col>
                         <Form.Group controlId="classe">

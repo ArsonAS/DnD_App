@@ -8,17 +8,17 @@ import {Login} from "./components/Autentication/Login";
 import {Dashboard} from "./components/Dashboard";
 import {CharacterPage} from "./components/CharacterPage";
 import {AddCharacter} from "./components/AddCharacter";
-
+import {CampaignPage} from "./components/CampaignPage";
 function App() {
   return (
       <Router>
-
           <Routes>
               <Route path="/" element={<Login/>}/>
               <Route path="/signup" element={<Signup/>}/>
               <Route path="/clientpage/:id" element={<Dashboard/>}/>
-              <Route path="/characterpage/:id" element={<CharacterPage/>}/>
               <Route path="/character/new" element={<AddCharacter/>}/>
+              <Route path="/characterpage/:id" element={<CharacterPage/>}/>
+              <Route path="/campaignpage/:id" element={<CampaignPage/>}/>
           </Routes>
       </Router>
   );
