@@ -90,7 +90,7 @@ public class ClientController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    @PutMapping("/campaign/notes")
+    @PutMapping("/notes")
     public ResponseEntity<CampaignDTO> updateNotesById(@RequestParam("campaignId") Long campaignId, @RequestParam("notes") String notes){
         return clientService.updateNotesById(campaignId, notes)
                 .map(ResponseEntity::ok)

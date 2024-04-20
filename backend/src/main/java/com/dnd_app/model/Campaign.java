@@ -18,11 +18,10 @@ public class Campaign {
     @SequenceGenerator(name = "camp_gen", sequenceName = "camp_sec", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "camp_gen")
     private Long id;
-
     private String name;
 
+    @Column(length = 50000)
     private String notes;
-
     private boolean finished;
 
     @ManyToOne
