@@ -72,7 +72,6 @@ export const addCharacterToCampaign = async (charId: number, campaignId: number)
         }
     });
 }
-
 export const getAllCharactersByCampaignId = async (campaignId: number): Promise<AxiosResponse<Character[]>> => {
     return http.get("/api/clients/campaign_characters", {
         params:{
@@ -87,6 +86,22 @@ export const getAllCampaignsByCharacterId = async (charId: number): Promise<Axio
         }
     });
 };
+
+export const updateFinishedStatus = async (campaignId: number) => {
+    return http.put<Campaign>(`/api/clients/campaign`, null,{
+        params: {
+            campaignId
+        }
+    });
+}
+export const updateNotesById = async (campaignId: number, notes: string) => {
+    return http.put<Campaign>('/api/clients/campaign/notes`', null,{
+        params: {
+            campaignId,
+            notes
+        }
+    });
+}
 
 export const createJournalEntry = async (journal: JournalEntry, charId: number)=> {
     return http.post(CAMPAIGN_PREFIX, journal, {
