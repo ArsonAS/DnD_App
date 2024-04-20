@@ -18,6 +18,7 @@ public class Journal {
     @SequenceGenerator(name = "parti_gen", sequenceName = "parti_sec", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parti_gen")
     private Long id;
+    @Column(length = 50000)
     private String entry;
     private LocalDate entryDate;
 
