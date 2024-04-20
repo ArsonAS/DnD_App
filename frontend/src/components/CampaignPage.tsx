@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row} from "react-bootstrap";
+import {Button, ButtonGroup, Col, Container, Row} from "react-bootstrap";
 import {NavBar} from "./NavBar";
 import React, {useEffect, useState} from "react";
 import {Character} from "../models/Character";
@@ -9,7 +9,7 @@ import {
     getAllCharactersByCampaignId, getAllCharactersByClientId,
     getCampaignById,
     getCharacterById,
-    getClientById
+    getClientById, updateFinishedStatus
 } from "../services/clientService";
 import {Campaign} from "../models/Campaign";
 import {CharacterList} from "./CharacterList";
@@ -61,7 +61,6 @@ export const CampaignPage = () => {
         if (!clientId) return;
         const fetchData2 = async () => {
 
-
             const clientCharRes = await getAllCharactersByClientId(parseInt(clientId));
             if (clientCharRes.data) setClientCharacters(clientCharRes.data);
 
@@ -91,8 +90,15 @@ export const CampaignPage = () => {
     const addCharacter = () => {
         const clientId = getClientId();
         if (!clientId) return;
-
         handleOpen();
+    }
+    const finishCampaign = () => {
+        if (campaign === undefined) return;
+
+        updateFinishedStatus(campaign.id!).then(() => {
+            window.location.reload();
+        });
+
     }
 
     return (
@@ -110,7 +116,11 @@ export const CampaignPage = () => {
                             <Col className="bg-dark border border-warning px-2 py-2">
                                 <Row className="px-2 flex-row justify-content-around">
                                     {client?.role === "DM"
-                                        ? (campaign?.finished === false && <Button variant="warning" >Ecrire dans Journal</Button>)
+                                        ? campaign?.finished === false &&
+                                                <ButtonGroup>
+                                                    <Button variant="warning" >Ecrire dans Journal</Button>
+                                                    <Button variant="warning" onClick={finishCampaign}>Finir Campagne</Button>
+                                                </ButtonGroup>
                                         : <Button variant="warning" onClick={addCharacter} >Ajouter un personnage</Button>
                                     }
                                 </Row>
