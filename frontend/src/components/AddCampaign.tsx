@@ -9,7 +9,6 @@ interface Props {
     show: boolean;
     handleClose: () => void;
     clientId: number;
-
 }
 export const AddCampaign = ({show, handleClose, clientId}: Props) => {
     const navigate = useNavigate();
@@ -17,8 +16,6 @@ export const AddCampaign = ({show, handleClose, clientId}: Props) => {
     const [name, setName] = useState<string>("");
     const [notes, setNotes] = useState<string>("");
     const [finished, setIsFinished] = useState<boolean>(false);
-
-
     const [errors, setErrors] = useState<string[]>([]);
 
     const validateForm = (): boolean => {
@@ -29,16 +26,13 @@ export const AddCampaign = ({show, handleClose, clientId}: Props) => {
             errorsToDisplay.push("Le Nom de la campagne ne peut pas être vide");
             isFormValid = false;
         }
-
         setErrors(errorsToDisplay);
-
         return isFormValid;
     };
 
 
     const submitForm = () => {
         if (!validateForm()) return;
-
         let campaign: Campaign = {
             name,
             notes,

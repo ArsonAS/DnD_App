@@ -95,7 +95,7 @@ export const updateFinishedStatus = async (campaignId: number) => {
     });
 }
 export const updateNotesById = async (campaignId: number, notes: string) => {
-    return http.put<Campaign>('/api/clients/campaign/notes`', null,{
+    return http.put<Campaign>('/api/clients/notes', null,{
         params: {
             campaignId,
             notes

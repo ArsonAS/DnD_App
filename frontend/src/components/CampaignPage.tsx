@@ -17,6 +17,7 @@ import {Client} from "../models/Client";
 import {getClientId} from "../security/authService";
 import {AddCampaign} from "./AddCampaign";
 import {JoinCampaign} from "./JoinCampaign";
+import {UpdateNotes} from "./UpdateNotes";
 
 export const CampaignPage = () => {
     const [client, setClient] = useState<Client>();
@@ -24,7 +25,8 @@ export const CampaignPage = () => {
     const [characters, setCharacters] = useState<Character[]>([]);
     const [clientCharacters, setClientCharacters] = useState<Character[]>([])
     const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
-    const [show, setShow] = useState<boolean>(false);
+    const [showJoinCampaign, setShowJoinCampaign] = useState<boolean>(false);
+    const [showUpdateNotes, setShowUpdateNotes] = useState<boolean>(false);
     const params = useParams();
     const [disabled, setDisables] = useState<boolean>(true)
 
@@ -85,20 +87,22 @@ export const CampaignPage = () => {
         setFilteredCharacters(filteredChars);
         return filteredChars;
     }
-    const handleOpen = () => setShow(true);
-    const handleClose = () => setShow(false);
+    const handleOpenJoinCampaign = () => setShowJoinCampaign(true);
+    const handleCloseJoinCampaign = () => setShowJoinCampaign(false);
+
+    const handleOpenUpdateNotes = () => setShowUpdateNotes(true);
+    const handleCloseUpdateNotes = () => setShowUpdateNotes(false);
+
     const addCharacter = () => {
         const clientId = getClientId();
         if (!clientId) return;
-        handleOpen();
+        handleOpenJoinCampaign();
     }
     const finishCampaign = () => {
         if (campaign === undefined) return;
-
         updateFinishedStatus(campaign.id!).then(() => {
             window.location.reload();
         });
-
     }
 
     return (
@@ -115,14 +119,14 @@ export const CampaignPage = () => {
                             </Col>
                             <Col className="bg-dark border border-warning px-2 py-2">
                                 <Row className="px-2 flex-row justify-content-around">
-                                    {client?.role === "DM"
-                                        ? campaign?.finished === false &&
-                                                <ButtonGroup>
-                                                    <Button variant="warning" >Ecrire dans Journal</Button>
-                                                    <Button variant="warning" onClick={finishCampaign}>Finir Campagne</Button>
-                                                </ButtonGroup>
-                                        : <Button variant="warning" onClick={addCharacter} >Ajouter un personnage</Button>
-                                    }
+                                    {campaign?.finished === false && (
+                                        client?.role === "DM" ?
+                                            <ButtonGroup>
+                                                <Button variant="warning" onClick={handleOpenUpdateNotes}>Ecrire Note</Button>
+                                                <Button variant="warning" onClick={finishCampaign}>Finir Campagne</Button>
+                                            </ButtonGroup>
+                                            :<Button variant="warning" onClick={addCharacter} >Ajouter un personnage</Button>
+                                    )}
                                 </Row>
                             </Col>
                         </Row>
@@ -130,18 +134,14 @@ export const CampaignPage = () => {
                     <Col sm={{span: 4, offset: 0}} className="border border-warning vh-100 overflow-auto">
                         <CharacterList characters={characters}/>
                     </Col>
-                </Row>
-                <Row>
-                    <Col sm={{span: 6, offset: 0}}>
-
-
-                    </Col>
-                    <Col sm={{span: 4, offset: 0}} className="">
-
+                    <Col sm={{span: 7, offset: 0}} className=" vh-100 overflow-auto">
+                        {campaign && campaign.notes}
                     </Col>
                 </Row>
 
-                {show && (<JoinCampaign show={show} handleClose={handleClose} characters={filteredCharacters} campaignId={campaign?.id!}/>)}
+                {showJoinCampaign && (<JoinCampaign show={showJoinCampaign} handleClose={handleCloseJoinCampaign} characters={filteredCharacters} campaignId={campaign?.id!}/>)}
+                {showUpdateNotes && (<UpdateNotes show={showUpdateNotes} handleClose={handleCloseUpdateNotes} campaignId={campaign?.id!} previousNotes={campaign?.notes!}/>)}
+
 
             </Container>
         </>
