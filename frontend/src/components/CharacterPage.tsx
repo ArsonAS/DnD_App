@@ -1,12 +1,18 @@
 import {Badge, Button, ButtonGroup, Col, Container, Form, FormControl, Row, Stack} from "react-bootstrap";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Character} from "../models/Character";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {getCharacterById, getClientById} from "../services/clientService";
+import {getAllJournalEntriesByCharacterId, getCharacterById, getClientById} from "../services/clientService";
 import {NavBar} from "./NavBar";
+import {JournalEntryList} from "./JournalEntryList";
+import {JournalEntry} from "../models/JournalEntry";
+import {AddCampaign} from "./AddCampaign";
+import {AddJournalEntry} from "./AddJournalEntry";
 
 export const CharacterPage = () => {
+    const [show, setShow] = useState<boolean>(false);
     const [character, setCharacter] = useState<Character>();
+    const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
     const navigate = useNavigate();
     const location = useLocation();
     const params = useParams();
@@ -20,7 +26,20 @@ export const CharacterPage = () => {
             setCharacter(response.data);
         })
 
-    },[setCharacter]);
+    },[character]);
+    useEffect(() => {
+        if (character === undefined) return;
+        const characterId = character.id;
+
+        if(!characterId) return;
+
+        getAllJournalEntriesByCharacterId(characterId).then((resp) => {
+            setJournalEntries(resp.data)
+        })
+
+    }, [character, setJournalEntries]);
+    const handleOpen = () => setShow(true);
+    const handleClose = () => setShow(false);
 
 
     return (
@@ -44,7 +63,6 @@ export const CharacterPage = () => {
                             </Col>
                         </Row>
                     </Col>
-
                     <Col sm={{span: 3, offset: 0}} className="flex-column border border-warning vh-100 overflow-auto pb-5 mb-5">
                         <p>Acrobaties</p>
                         <p>Manipulation des animaux</p>
@@ -66,8 +84,9 @@ export const CharacterPage = () => {
                         <p>Survivance</p>
 
                     </Col>
-                    <Col sm={{span: 9, offset: 0}} className="bg-dark border border-warning p-2 align-self-sm-start">
-                        <Row className="p-3 flex-row justify-content-between">
+
+                    <Col sm={{span: 9, offset: 0}} className="bg-dark px-2-0 align-self-sm-start">
+                        <Row className="p-3 flex-row justify-content-between border border-warning">
                             <Badge pill bg="danger" className="pt-3 border border-warning">
                                 <p className="align-items-center">
                                     <span className="h6 d-none d-lg-inline-block">Force:</span>
@@ -111,15 +130,19 @@ export const CharacterPage = () => {
                                 </p>
                             </Badge>
                         </Row>
+                        <Row className="p-3 justify-content-between border border-warning border-bottom-0 overflow-auto pb-5">
+                            <Row className="p-2">
+                                <Button variant='warning' onClick={handleOpen}>Ecrir dans le journal</Button>
+                            </Row>
+
+                            <JournalEntryList journalEntries={journalEntries}/>
+                        </Row>
                     </Col>
+
                 </Row>
 
 
-                <Row>
-                    <Col>
-
-                    </Col>
-                </Row>
+                {show && (<AddJournalEntry show={show} handleClose={handleClose} characterId={character?.id!}/>)}
 
 
             </Container>

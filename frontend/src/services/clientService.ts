@@ -104,7 +104,7 @@ export const updateNotesById = async (campaignId: number, notes: string) => {
 }
 
 export const createJournalEntry = async (journal: JournalEntry, charId: number)=> {
-    return http.post(CAMPAIGN_PREFIX, journal, {
+    return http.post("/api/clients/journal_entries", journal, {
         params:{
             charId
         }
@@ -118,7 +118,7 @@ export const getJournalEntryById = async (journalId: number): Promise<AxiosRespo
     });
 };
 export const getAllJournalEntriesByCharacterId = async (charId: number): Promise<AxiosResponse<JournalEntry[]>> => {
-    return http.get("/api/clients/character_campaigns", {
+    return http.get("/api/clients/journal_entries", {
         params:{
             charId
         }
