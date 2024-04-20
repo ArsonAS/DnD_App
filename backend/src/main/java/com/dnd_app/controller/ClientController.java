@@ -76,16 +76,28 @@ public class ClientController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
     @GetMapping("/campaign_characters")
     public ResponseEntity<List<CharacterDTO>> getAllCharactersByCampaignId(@RequestParam("campaignId") Long campaignId){
         return ResponseEntity.ok(clientService.findAllCharactersByCampaignId(campaignId));
     }
-
     @GetMapping("/character_campaigns")
     public ResponseEntity<List<CampaignDTO>> getAllCampaignsByCharacterId(@RequestParam("charId") Long charId){
         return ResponseEntity.ok(clientService.findAllCampaignsByCharacterId(charId));
     }
+    @PutMapping("/campaign")
+    public ResponseEntity<CampaignDTO> updateFinishedStatusById(@RequestParam("campaignId") Long campaignId){
+        return clientService.updateFinishedStatusById(campaignId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @PutMapping("/campaign/notes")
+    public ResponseEntity<CampaignDTO> updateNotesById(@RequestParam("campaignId") Long campaignId, @RequestParam("notes") String notes){
+        return clientService.updateNotesById(campaignId, notes)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 
     @PostMapping("/journal_entries")
     public ResponseEntity<HttpStatus> createJournalEntry(@RequestBody JournalDTO journalDTO, @RequestParam("charId") Long charId){
