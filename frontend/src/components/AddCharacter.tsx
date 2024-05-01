@@ -23,14 +23,16 @@ export const AddCharacter = () => {
     const [intelligence, setIntelligence] = useState<number>(10);
     const [wisdom, setWisdom] = useState<number>(10);
     const [charisma, setCharisma] = useState<number>(10);
-    const [clientId, setClientId] = useState<number>(1);
+    const [clientId, setClientId] = useState<number>(0);
 
     const [errors, setErrors] = useState<string[]>([]);
 
     const submitForm = () => {
         if (!validateForm()) return;
         const id = getClientId();
+        console.log(id)
         if (id !== null) setClientId(parseInt(id));
+        if (clientId === 0) return;
 
         let character: Character = {
             name,
