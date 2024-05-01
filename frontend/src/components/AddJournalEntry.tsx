@@ -80,10 +80,7 @@ export const AddJournalEntry = ({show, handleClose, characterId}: Props) => {
                             />
 
                         </Form.Group>
-                        <FormInput label="" value={entry} onChange={(e)=> setEntry(e.target.value)}
-                                   errors={errors} formError="Le journal ne peut pas être vide"
-                                   controlId="campaignName"
-                        />
+                        <textarea rows={4} cols={60} value={entry} onChange={(e) => setEntry(e.target.value)}/>
                     </Col>
                 </Row>
             </Modal.Body>

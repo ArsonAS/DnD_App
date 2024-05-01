@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Character} from "../models/Character";
 import {Button, Col, Container, Form, FormControl, Row} from "react-bootstrap";
 import FormInput from "./FormInput";
@@ -27,11 +27,13 @@ export const AddCharacter = () => {
 
     const [errors, setErrors] = useState<string[]>([]);
 
-    const submitForm = () => {
-        if (!validateForm()) return;
+    useEffect(() => {
         const id = getClientId();
         console.log(id)
         if (id !== null) setClientId(parseInt(id));
+    });
+    const submitForm = () => {
+        if (!validateForm()) return;
         if (clientId === 0) return;
 
         let character: Character = {
