@@ -19,7 +19,7 @@ export const JournalEntryList = ({journalEntries}: Props) => {
     );
 
     return (
-        <Table className="text-warning border border-warning align-items-baseline overflow-auto">
+        <Table className="text-warning border border-warning align-items-baseline vh-100">
             <tbody>
                 {journalEntryList}
             </tbody>

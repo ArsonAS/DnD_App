@@ -108,7 +108,7 @@ export const Dashboard = () => {
                     : <Button variant="warning" onClick={onSwitchAction}>Voir la page en tant que MD</Button>
                 }
             </Row>
-            <Row>
+            <Row >
                 <Col sm={{span: 6, offset: 0}}>
                     {client?.role === "DM"
                         ? <CampaignList campaigns={campaigns}/>

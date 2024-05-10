@@ -130,12 +130,14 @@ export const CharacterPage = () => {
                                 </p>
                             </Badge>
                         </Row>
-                        <Row className="p-3 justify-content-between border border-warning border-bottom-0 overflow-auto pb-5">
+                        <Row className="p-3 justify-content-between border border-warning border-bottom-0  vh-100 pb-5 mb-5">
                             <Row className="p-2">
                                 <Button variant='warning' onClick={handleOpen}>Ecrir dans le journal</Button>
                             </Row>
+                            <Row className="vh-100 overflow-auto">
+                                <JournalEntryList journalEntries={journalEntries}/>
+                            </Row>
 
-                            <JournalEntryList journalEntries={journalEntries}/>
                         </Row>
                     </Col>
 
