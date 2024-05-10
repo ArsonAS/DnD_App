@@ -94,15 +94,27 @@ public class DnDApplication implements CommandLineRunner {
         if(!characterOptional6.isPresent()) return;
 
         Campaign campaign1 = Campaign.campaignBuilder()
-                .id(1L).name("Premiere Campagne")
-                .notes("06/4/2024 -> Rien de nouveau.")
+                .id(1L).name("L’immense Arachnatron. ")
+                .notes("06/4/2024 -> We're in a village of a about 7 dozen people. We're surrounded by undead humanoids, monstrous humanoids, and animals. They're mooks, we could wipe them out with some patience and a good battle strategy, but there's a bigger problem on the horizon. Our scrying and divinations have let us know that we've got about one week, give or take a day, to get ready for a wave of kythons to attack the town in an orgy of blood and fury.\n" +
+                        "\n" +
+                        "There's a LOT of them. A LOT of juveniles, a good number of broodlings and adults, and a single slaymaster (you have to know about the kythons for that to make sense). Worse, anything we kill will get up and fight us again, though probably weaker. WORSE WORSE, anything THEY kill will get up and fight us.\n" +
+                        "\n" +
+                        "I think our DM wanted us to quest for something to help us protect the town, but we threw a curveball at him, and suggested:\n" +
+                        "\n" +
+                        "Us: \"What if we taught the village how to fight?\"\n" +
+                        "DM: \"In a week?\"\n" +
+                        "Us: \"Better than nothing.\"\n" +
+                        "\n" +
+                        "In our games, 6th level means you're a downright famous member of your chosen class. Maybe not a world-shatterer, but a 6th level cleric is almost definitely someone other clerics have heard of. A 6th level wizard is a respectable and admired arcanist. Ect.\n" +
+                        "\n" +
+                        "Since we're considered \"downright incredible\" by 99% of the worlds population (99% of the worlds population being 1rst level NPC classes), and since our DM liked our suggestion so much, he's letting us go for it. We get to transform the NPCs into ready adventurers. The solid week of hands-on training will give them a (one-time only) jump to second level, and they loose their NPC classes, gaining real base classes instead.")
                 .client(client)
                 .build();
         Optional<CampaignDTO> optionalCampaignDTO1 = clientService.createCampaign(new CampaignDTO(campaign1), client.getId());
         if(!optionalCampaignDTO1.isPresent()) return;
 
         Campaign campaign2 = Campaign.campaignBuilder()
-                .id(2L).name("Deuxieme Campagne")
+                .id(2L).name("La conspiration du Grand Conseil")
                 .notes("07/4/2024 -> Rien de nouveau.")
                 .client(client)
                 .build();
